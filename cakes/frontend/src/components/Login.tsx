@@ -19,7 +19,14 @@ const Login: React.FC<LoginProps> = ({ setUserRole }) => {
         
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/login/', { login, password });
-            setUserRole(response.data.role);
+            localStorage.setItem('access_token', response.data.access);
+            localStorage.setItem('refresh_token', response.data.refresh);
+            const userResponse = await axios.get('http://127.0.0.1:8000/api/current_user/', {
+                headers: {
+                  Authorization: `Bearer ${response.data.access}`,
+                },
+              });
+            setUserRole(userResponse.data.role);
             navigate('/');
         } catch (error) {
             setError('Неправильный логин или пароль');
