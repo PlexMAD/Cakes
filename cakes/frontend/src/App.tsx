@@ -9,6 +9,7 @@ import DirectorDashboard from './components/DirectorDashboard';
 import MasterDashboard from './components/MasterDashboard';
 import PurchasesManagerDashboard from './components/PurchasesManagerDashboard';
 import ClientManagerDashboard from './components/ClientManagerDashboard';
+import BuyerRegistration from './components/BuyerRegistration';
 
 
 function App() {
@@ -61,7 +62,8 @@ function App() {
       <Routes>
       <Route path="/" element={userRole ? <Navigate to={getRedirectPath()} /> : <Login setUserRole={setUserRole} />} />
       <Route path="/buyer-panel" element={<PrivateRoute component={BuyerDashboard} role={"Заказчик"} userRole={userRole} />} />
-      <Route path="/clientmanager-panel" element={<PrivateRoute component={ClientManagerDashboard} role={"Менеджер по работе с клиентами"} userRole={userRole} />} />
+      {/* ниже тест */}
+      <Route path="/clientmanager-panel" element={<PrivateRoute component={BuyerRegistration} role={"Менеджер по работе с клиентами"} userRole={userRole} />} />
       <Route path="/purchasemanager-panel" element={<PrivateRoute component={PurchasesManagerDashboard} role={"Менеджер по закупкам"} userRole={userRole} />} />
       <Route path="/master-panel" element={<PrivateRoute component={MasterDashboard} role={"Мастер"} userRole={userRole} />} />
       <Route path="/director-panel" element={<PrivateRoute component={DirectorDashboard} role={"Директор"} userRole={userRole} />} />
