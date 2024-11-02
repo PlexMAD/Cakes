@@ -1,4 +1,4 @@
-from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
@@ -7,6 +7,21 @@ class Supplier(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True, blank=True)
     address = models.TextField()
     delivery_deadline = models.DateField(db_column='deadline', blank=True, null=True)
+
+
+class UserManager(BaseUserManager):
+    def create_user(self, login, password=None, **extra_fields):
+        if not login:
+            raise ValueError('The Email field must be set')
+        login = self.normalize_login(login)
+        user = self.model(login=login, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(email, password, **extra_fields)
 
 
 class Users(AbstractBaseUser, PermissionsMixin):
@@ -24,6 +39,10 @@ class Users(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'login'
     REQUIRED_FIELDS = []
+    objects = UserManager()
+
+    def __str__(self):
+        return self.login
 
 
 class CakeDecoration(models.Model):
