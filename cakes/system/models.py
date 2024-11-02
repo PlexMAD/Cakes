@@ -15,7 +15,7 @@ class Users(AbstractBaseUser, PermissionsMixin):
     password = models.TextField(db_column='Password')
     full_name = models.TextField(db_column='FullName', blank=True, null=True)
     role = models.TextField(db_column='role')
-    photo = models.ImageField(upload_to="images/")
+    photo = models.ImageField(upload_to="images/", blank=True, null=True)
 
     last_login = None
     is_superuser = None
@@ -86,7 +86,8 @@ class CakeDecorationSpecification(models.Model):
 
 class SemiproductsSpecification(models.Model):
     product = models.ForeignKey(Product, models.DO_NOTHING, db_column='product', related_name='specification_product')
-    semiproduct = models.ForeignKey(Product, models.DO_NOTHING, db_column='semiproduct', related_name='specification_semiproduct')
+    semiproduct = models.ForeignKey(Product, models.DO_NOTHING, db_column='semiproduct',
+                                    related_name='specification_semiproduct')
     quantity = models.DecimalField(db_column='quantity', max_digits=10, decimal_places=2)
 
     class Meta:
