@@ -5,8 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from .models import Users
-from .serializers import UsersSerializer, CustomTokenObtainPairSerializer
+from .models import *
+from .serializers import *
 
 
 @api_view(['GET'])
@@ -20,6 +20,11 @@ def current_user(request):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = Users.objects.all()
     serializer_class = UsersSerializer
+
+
+class EquipmentViewSet(viewsets.ModelViewSet):
+    queryset = Equipment.objects.all()
+    serializer_class = EquipmentSerializer
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):

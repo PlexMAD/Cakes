@@ -1,12 +1,18 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import Users
+from .models import *
 
 
 class UsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
+        fields = '__all__'
+
+
+class EquipmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Equipment
         fields = '__all__'
 
 
