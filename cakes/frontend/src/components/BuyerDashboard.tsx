@@ -1,9 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 
-const BuyerDashboard: React.FC = () => {
-    return (<div></div>)
+const MasterDashboard: React.FC = () => {
+    const handleLogout = () => {
+        localStorage.removeItem('access_token');
+        window.location.reload();
+    };
+
+    return (
+        <div>
+            <h1>Buyer Dashboard</h1>
+            <button onClick={handleLogout}>Logout</button>
+        </div>
+    );
 }
 
-export default BuyerDashboard;
-
+export default MasterDashboard;

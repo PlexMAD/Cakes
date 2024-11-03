@@ -5,16 +5,17 @@ interface PrivateRouteProps {
   component: React.ComponentType;
   role: string;
   userRole: string | null;
+  canAccess?: boolean; // Добавлен новый пропс для контроля доступа
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, role, userRole }) => {
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, role, userRole, canAccess }) => {
   const isAuthenticated = !!localStorage.getItem('access_token');
 
   if (!isAuthenticated) {
     return <Navigate to="/" />; 
   }
 
-  if (userRole === null || userRole !== role) {
+  if (userRole === null || userRole !== role || (canAccess === false && userRole === "Заказчик")) {
     return <Navigate to="/" />;
   }
 

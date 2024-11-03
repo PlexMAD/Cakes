@@ -11,8 +11,29 @@ class UsersSerializer(serializers.ModelSerializer):
 
 
 class EquipmentSerializer(serializers.ModelSerializer):
+    type = serializers.PrimaryKeyRelatedField(queryset=EquipmentType.objects.all(), write_only=True)
+    type_name = serializers.CharField(source='type.name', read_only=True)
+
     class Meta:
         model = Equipment
+        fields = ['id', 'equipment_number', 'type', 'type_name']
+
+
+class EquipmentTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EquipmentType
+        fields = '__all__'
+
+
+class IngredientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ingredient
+        fields = '__all__'
+
+
+class CakeDecorationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CakeDecoration
         fields = '__all__'
 
 
