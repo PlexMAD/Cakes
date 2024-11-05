@@ -5,8 +5,20 @@ const BuyerRegistration: React.FC = () => {
     const [login, setLogin] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [fullName, setFullName] = useState<string>('');
-    const [role, setRole] = useState<string>('buyer');
     const [photo, setPhoto] = useState<File | null>(null);
+    const [photoPreview, setPhotoPreview] = useState<string | null>(null); // Добавлено для отображения превью
+
+    const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files ? e.target.files[0] : null;
+        setPhoto(file);
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPhotoPreview(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -15,7 +27,7 @@ const BuyerRegistration: React.FC = () => {
         formData.append('login', login);
         formData.append('password', password);
         formData.append('full_name', fullName);
-        formData.append('role', role);
+        formData.append('role', 'buyer');
         if (photo) {
             formData.append('photo', photo);
         }
@@ -33,36 +45,48 @@ const BuyerRegistration: React.FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Login:
-                <input type="text" value={login} onChange={(e) => setLogin(e.target.value)} required />
-            </label>
-            <label>
-                Password:
+        <div className="center-container">
+            <form className="registration" onSubmit={handleSubmit}>
+                <h2 className="registration__title">Зарегистрироваться</h2>
+                <input
+                    type="text"
+                    placeholder="Введите Ф.И.О."
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    className="registration__input"
+                    required
+                />
+                <input
+                    type="text"
+                    placeholder="Логин"
+                    value={login}
+                    onChange={(e) => setLogin(e.target.value)}
+                    className="registration__input"
+                    required
+                />
                 <input
                     type="password"
+                    placeholder="Пароль"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    className="registration__input"
                     required
-                    pattern="^(?!.*login)(?=.*[a-z])(?=.*[A-Z]).{5,20}$"
-                    title="Password must be 5-20 characters, contain uppercase and lowercase letters, and not include the login."
                 />
-            </label>
-            <label>
-                Full Name:
-                <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} />
-            </label>
-            <label>
-                Role:
-                <input type="text" value={role} onChange={(e) => setRole(e.target.value)} />
-            </label>
-            <label>
-                Photo:
-                <input type="file" onChange={(e) => setPhoto(e.target.files ? e.target.files[0] : null)} />
-            </label>
-            <button type="submit">Register</button>
-        </form>
+                <label className="registration__label">
+                    Загрузите фото профиля
+                    <input
+                        type="file"
+                        onChange={handlePhotoChange}
+                        className="registration__file-input"
+                        accept="image/*"
+                    />
+                </label>
+                {photoPreview && (
+                    <img src={photoPreview} alt="Фото профиля" className="registration__photo-preview" />
+                )}
+                <button type="submit" className="registration__button">Создать аккаунт</button>
+            </form>
+        </div>
     );
 };
 

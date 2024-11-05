@@ -14,7 +14,6 @@ interface Ingredient {
     packing: string;
     characteristic?: string;
     expiry_date?: string;
-    [key: string]: any;
 }
 
 const IngredientsPage: React.FC = () => {
@@ -36,18 +35,15 @@ const IngredientsPage: React.FC = () => {
         const data: Ingredient[] = await response.json();
         setIngredients(data);
 
-        if (data.length > 0) {
-            const cost = data.reduce((acc, ingredient) => acc + parseFloat(ingredient.purchase_price), 0);
-            setTotalCost(cost);
-        } else {
-            setTotalCost(0);
-        }
-
+        const cost = data.reduce((acc, ingredient) => acc + parseFloat(ingredient.purchase_price), 0);
+        setTotalCost(cost);
         setTotalCount(data.length);
-
-        const uniqueNames = new Set(data.map(ingredient => ingredient.name));
-        setUniqueItemsCount(uniqueNames.size);
+        setUniqueItemsCount(new Set(data.map(item => item.name)).size);
     };
+
+    useEffect(() => {
+        fetchIngredients(expiryDate);
+    }, [expiryDate]);
 
     const handleEdit = (ingredient: Ingredient) => {
         setEditingIngredient(ingredient);
@@ -72,7 +68,10 @@ const IngredientsPage: React.FC = () => {
         const formDataToSend = new FormData();
 
         for (const key in formData) {
-            formDataToSend.append(key, formData[key] as string);
+            const typedKey = key as keyof Ingredient;
+            if (formData[typedKey] !== undefined && formData[typedKey] !== null) {
+                formDataToSend.append(key, String(formData[typedKey]));
+            }
         }
 
         if (imageFile) {
@@ -80,140 +79,177 @@ const IngredientsPage: React.FC = () => {
         }
 
         if (editingIngredient) {
-            await fetch(`http://127.0.0.1:8000/api/ingredients/${editingIngredient.id}/`, {
+            const response = await fetch(`http://127.0.0.1:8000/api/ingredients/${editingIngredient.id}/`, {
                 method: 'PUT',
                 body: formDataToSend,
             });
-            setEditingIngredient(null);
-            fetchIngredients(expiryDate);
+
+            if (response.ok) {
+                const updatedIngredient: Ingredient = await response.json();
+                
+                // Обновляем элемент в списке ингредиентов без полной перезагрузки
+                setIngredients(prevIngredients =>
+                    prevIngredients.map(ingredient =>
+                        ingredient.id === updatedIngredient.id ? updatedIngredient : ingredient
+                    )
+                );
+                
+                setEditingIngredient(null);
+            } else {
+                console.error("Ошибка при обновлении ингредиента");
+            }
         }
     };
 
-    useEffect(() => {
-        fetchIngredients(expiryDate);
-    }, [expiryDate]);
-
     return (
-        <div>
-            <h1>Ингредиенты</h1>
-            <input
-                type="date"
-                value={expiryDate}
-                onChange={(e) => setExpiryDate(e.target.value)}
-            />
-            <h2>Всего позиций: {totalCount}</h2>
-            <h2>Уникальных позиций: {uniqueItemsCount}</h2>
-            <h2>Общая стоимость: {totalCost} ₽</h2>
+        <div className="ingredients-page">
+            <h1 className="ingredients-page__title">Ингредиенты</h1>
+            <div className="ingredients-page__filter">
+                <label>Фильтр:</label>
+                <input
+                    type="date"
+                    value={expiryDate}
+                    onChange={(e) => setExpiryDate(e.target.value)}
+                    className="ingredients-page__date"
+                />
+            </div>
+            <div className="ingredients-page__info">
+                <p>Всего позиций: {totalCount}</p>
+                <p>Уникальных позиций: {uniqueItemsCount}</p>
+                <p>Общая стоимость: {totalCost} ₽</p>
+            </div>
+            <div className="ingredients-page__grid">
+                {ingredients.map((ingredient) => (
+                    <div key={ingredient.id} className="ingredient-card">
+                        <p className="ingredient-card__quantity">Количество: {ingredient.quantity} шт</p>
+                        {ingredient.image && (
+                            <img src={ingredient.image} alt={ingredient.name} className="ingredient-card__image" />
+                        )}
+                        <p className="ingredient-card__name">{ingredient.name}</p>
+                        <p className="ingredient-card__article">Артикул: {ingredient.article}</p>
+                        <p className="ingredient-card__measure">Единица измерения: {ingredient.unit_of_measure}</p>
+                        <p className="ingredient-card__supplier">Основной поставщик: {ingredient.main_supplier}</p>
+                        <p className="ingredient-card__type">Тип ингредиента: {ingredient.ingredient_type}</p>
+                        {ingredient.gost && <p className="ingredient-card__gost">ГОСТ: {ingredient.gost}</p>}
+                        {ingredient.packing && <p className="ingredient-card__packing">Фасовка: {ingredient.packing}</p>}
+                        {ingredient.characteristic && <p className="ingredient-card__characteristic">Характеристика: {ingredient.characteristic}</p>}
+                        <p className="ingredient-card__expiry">Срок годности: {ingredient.expiry_date}</p>
+                        <p className="ingredient-card__price">Закупочная цена: {ingredient.purchase_price} ₽</p>
+                        <div className="ingredient-card__buttons">
+                            <button
+                                className="ingredient-card__edit-button"
+                                onClick={() => handleEdit(ingredient)}
+                            >
+                                Редактировать
+                            </button>
+                            <button className="ingredient-card__delete-button">Удалить</button>
+                        </div>
+                    </div>
+                ))}
+            </div>
 
             {editingIngredient && (
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="ingredients-page__edit-form">
                     <h3>Редактировать ингредиент</h3>
+                    <label>Наименование:</label>
                     <input
                         type="text"
                         name="name"
                         value={formData.name || ''}
                         onChange={handleChange}
-                        placeholder="Наименование"
+                        className="ingredients-page__input"
                     />
+                    <label>Артикул:</label>
                     <input
                         type="text"
                         name="article"
                         value={formData.article || ''}
                         onChange={handleChange}
-                        placeholder="Артикул"
+                        className="ingredients-page__input"
                     />
+                    <label>Единица измерения:</label>
                     <input
                         type="text"
                         name="unit_of_measure"
                         value={formData.unit_of_measure || ''}
                         onChange={handleChange}
-                        placeholder="Единица измерения"
+                        className="ingredients-page__input"
                     />
+                    <label>Количество:</label>
                     <input
                         type="number"
                         name="quantity"
                         value={formData.quantity || ''}
                         onChange={handleChange}
-                        placeholder="Количество"
+                        className="ingredients-page__input"
                     />
+                    <label>Основной поставщик:</label>
                     <input
                         type="text"
                         name="main_supplier"
                         value={formData.main_supplier || ''}
                         onChange={handleChange}
-                        placeholder="Основной поставщик"
+                        className="ingredients-page__input"
                     />
+                    <label>Тип ингредиента:</label>
                     <input
                         type="text"
                         name="ingredient_type"
                         value={formData.ingredient_type || ''}
                         onChange={handleChange}
-                        placeholder="Тип ингредиента"
+                        className="ingredients-page__input"
                     />
+                    <label>Закупочная цена:</label>
                     <input
                         type="text"
                         name="purchase_price"
                         value={formData.purchase_price || ''}
                         onChange={handleChange}
-                        placeholder="Закупочная цена"
+                        className="ingredients-page__input"
                     />
+                    <label>ГОСТ:</label>
                     <input
                         type="text"
                         name="gost"
                         value={formData.gost || ''}
                         onChange={handleChange}
-                        placeholder="ГОСТ"
+                        className="ingredients-page__input"
                     />
+                    <label>Фасовка:</label>
                     <input
                         type="text"
                         name="packing"
                         value={formData.packing || ''}
                         onChange={handleChange}
-                        placeholder="Фасовка"
+                        className="ingredients-page__input"
                     />
+                    <label>Характеристика:</label>
                     <input
                         type="text"
                         name="characteristic"
                         value={formData.characteristic || ''}
                         onChange={handleChange}
-                        placeholder="Характеристика"
+                        className="ingredients-page__input"
                     />
+                    <label>Срок годности:</label>
                     <input
                         type="date"
                         name="expiry_date"
                         value={formData.expiry_date || ''}
                         onChange={handleChange}
-                        placeholder="Срок годности"
+                        className="ingredients-page__input"
                     />
+                    <label>Изображение:</label>
                     <input
                         type="file"
                         accept="image/*"
                         onChange={handleImageChange}
+                        className="ingredients-page__file-input"
                     />
-                    <button type="submit">Сохранить</button>
-                    <button onClick={() => setEditingIngredient(null)}>Отменить</button>
+                    <button type="submit" className="ingredients-page__save-button">Сохранить</button>
+                    <button type="button" onClick={() => setEditingIngredient(null)} className="ingredients-page__cancel-button">Отменить</button>
                 </form>
             )}
-
-            <ul>
-                {ingredients.map((ingredient) => (
-                    <li key={ingredient.id}>
-                        <strong>Наименование:</strong> {ingredient.name}<br />
-                        <strong>Артикул:</strong> {ingredient.article}<br />
-                        <strong>Единица измерения:</strong> {ingredient.unit_of_measure}<br />
-                        <strong>Количество:</strong> {ingredient.quantity}<br />
-                        <strong>Основной поставщик:</strong> {ingredient.main_supplier}<br />
-                        <strong>Тип ингредиента:</strong> {ingredient.ingredient_type}<br />
-                        <strong>Закупочная цена:</strong> {ingredient.purchase_price} ₽<br />
-                        <strong>ГОСТ:</strong> {ingredient.gost || 'Не указано'}<br />
-                        <strong>Фасовка:</strong> {ingredient.packing}<br />
-                        <strong>Характеристика:</strong> {ingredient.characteristic || 'Нет данных'}<br />
-                        <strong>Срок годности:</strong> {ingredient.expiry_date || 'Нет данных'}<br />
-                        {ingredient.image && <img src={ingredient.image} alt={ingredient.name} style={{ width: '100px', height: '100px' }} />}
-                        <button onClick={() => handleEdit(ingredient)}>Редактировать</button>
-                    </li>
-                ))}
-            </ul>
         </div>
     );
 };

@@ -1,13 +1,551 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Общий стиль для шрифта */
+* {
+  font-family: 'Comic Sans MS', sans-serif;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Основные стили для центрирования контента */
+body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
 }
+
+/* Контейнер для центрирования */
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/*Login*/
+.login {
+  width: 100%;
+  max-width: 500px; /* Увеличенная ширина формы */
+  padding: 30px; /* Увеличенные отступы */
+  background-color: #FFAA4C;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+}
+
+.login__logo {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 70px; /* Увеличенный размер логотипа */
+  height: 70px;
+}
+
+.login__title {
+  font-size: 28px; /* Увеличенный размер текста заголовка */
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.login__input {
+  width: 100%;
+  padding: 12px; /* Увеличенные отступы внутри полей ввода */
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 6px;
+  background-color: #F7E7A4;
+}
+
+.login__button {
+  width: 100%;
+  padding: 15px; /* Увеличенная высота кнопки */
+  background-color: #333;
+  color: #FFF;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px; /* Увеличенный размер шрифта кнопки */
+}
+
+.login__button:hover {
+  background-color: #444;
+}
+
+.login__error {
+  color: red;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+.login__blocked {
+  color: #555;
+  font-size: 16px;
+  margin-top: 15px;
+}
+/*Login*/
+/*ClientManagerDashboard*/
+.dashboard {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  background-color: #F5F5DC;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard__title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+  width: 100%;
+}
+
+.dashboard__logout-button {
+  padding: 10px 20px;
+  background-color: #FF0000; /* Красный цвет кнопки */
+  color: #FFF;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+.dashboard__logout-button:hover {
+  background-color: #cc0000;
+}
+/*ClientManagerDashboard*/
+/*Registration*/
+.registration {
+  width: 100%;
+  max-width: 500px;
+  padding: 30px;
+  background-color: #FFAA4C;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+}
+
+.registration__title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.registration__input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 6px;
+  background-color: #F7E7A4;
+}
+
+.registration__label {
+  display: inline-block; /* Чтобы фон ограничивался текстом */
+  padding: 5px 10px; /* Добавим немного внутреннего отступа */
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Плавный переход */
+  border-radius: 4px;
+  background-color: transparent; /* Исходный фон прозрачный */
+  margin-bottom: 20px;
+}
+
+.registration__file-input {
+  display: none;
+}
+
+.registration__photo-preview {
+  width: 100px; /* Ширина прямоугольного изображения */
+  height: 100px; /* Высота прямоугольного изображения */
+  object-fit: cover;
+  background-color: #E0E0E0;
+  display: block;
+  margin-top: 10px;
+  margin-left: 0; /* По левому краю */
+  margin-bottom: 20px; /* Отступ от кнопки "Создать аккаунт" */
+}
+
+.registration__label:hover {
+  background-color: #F7E7A4; /* Цвет фона при наведении */
+}
+
+.registration__button {
+  width: 100%;
+  padding: 15px;
+  background-color: #333;
+  color: #FFF;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.registration__button:hover {
+  background-color: #444;
+}
+/*Registration*/
+/*EquipmentPage*/
+.equipment {
+  max-width: 600px;
+  padding: 20px;
+  background-color: #FFAA4C;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 20px;
+}
+
+/* Заголовок */
+.equipment__title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Список инвентаря */
+.equipment__list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.equipment__item {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.equipment__edit-button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #333;
+  color: #FFF;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.equipment__edit-button:hover {
+  background-color: #444;
+}
+
+/* Секция редактирования */
+.equipment__edit-section {
+  margin-top: 30px;
+}
+
+.equipment__edit-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Форма редактирования */
+.equipment__form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap; /* Чтобы элементы переходили на следующую строку при необходимости */
+  margin-top: 10px;
+}
+
+.equipment__label {
+  font-size: 16px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  margin-right: 10px; /* Отступ между лейблом и полем ввода */
+}
+
+.equipment__input,
+.equipment__select {
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: #F7E7A4;
+}
+
+/* Группа кнопок */
+.equipment__button-group {
+  display: flex;
+  gap: 10px; /* Отступ между кнопками */
+  margin-top: 10px; /* Отступ сверху для группы кнопок */
+}
+
+/* Кнопки сохранения и отмены */
+.equipment__save-button,
+.equipment__cancel-button {
+  padding: 8px 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  flex-shrink: 0; /* Чтобы кнопки не сжимались */
+}
+
+.equipment__save-button {
+  background-color: #4CAF50;
+  color: #FFF;
+}
+
+.equipment__save-button:hover {
+  background-color: #45a049;
+}
+
+.equipment__cancel-button {
+  background-color: #FF0000;
+  color: #FFF;
+}
+
+.equipment__cancel-button:hover {
+  background-color: #cc0000;
+}
+/*EquipmentPage*/
+
+/* ingredients */
+.ingredients-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f0e6c8;
+  min-height: 100vh;
+}
+
+.ingredients-page__title {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.ingredients-page__filter, .ingredients-page__info {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.ingredients-page__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.ingredient-card {
+  position: relative;
+  background-color: #ffdc99;
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.ingredient-card__image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.ingredient-card__quantity {
+  position: absolute;
+  top: 8px; /* Отступ от верхнего края */
+  right: 8px; /* Отступ от правого края */
+  font-size: 12px;
+  background-color: rgba(255, 255, 255, 0.9); /* Легкий фон для читаемости */
+  padding: 4px 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Небольшая тень */
+  color: #333;
+}
+
+.ingredient-card__name, .ingredient-card__measure, .ingredient-card__price, .ingredient-card__expiry {
+  margin: 5px 0;
+}
+
+.ingredient-card__buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.ingredient-card__edit-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.ingredient-card__delete-button {
+  background-color: #FF0000;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.ingredients-page__edit-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
+  background-color: #ffdc99;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
+.ingredients-page__input, .ingredients-page__file-input {
+  flex: 1 1 200px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.ingredients-page__save-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.ingredients-page__cancel-button {
+  background-color: #FF0000;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  flex: 1;
+}
+/* ingredients */
+
+/* DecorationsPage */
+.decorations-page, .ingredients-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f0e6c8;
+  min-height: 100vh;
+}
+
+.decorations-page__title, .ingredients-page__title {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.decorations-page__filter, .ingredients-page__filter {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.decorations-page__grid, .ingredients-page__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.decoration-card, .ingredient-card {
+  position: relative;
+  background-color: #ffdc99;
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.decoration-card__image, .ingredient-card__image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.decoration-card__quantity, .ingredient-card__quantity {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.decoration-card__buttons, .ingredient-card__buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.decorations-page__edit-form, .ingredients-page__edit-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
+  background-color: #ffdc99;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
+.decorations-page__save-button, .decorations-page__cancel-button,
+.ingredients-page__save-button, .ingredients-page__cancel-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.decorations-page__save-button {
+  background-color: #4CAF50; /* Зеленый цвет для кнопки "Сохранить" */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.decorations-page__cancel-button {
+  background-color: #FF0000; /* Красный цвет для кнопки "Отменить" */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* DecorationsPage */

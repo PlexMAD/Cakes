@@ -12,7 +12,6 @@ interface CakeDecoration {
     purchase_price: string;
     weight: number;
     expiry_date?: string;
-    [key: string]: any;
 }
 
 const DecorationsPage: React.FC = () => {
@@ -20,7 +19,7 @@ const DecorationsPage: React.FC = () => {
     const [expiryDate, setExpiryDate] = useState('');
     const [totalCost, setTotalCost] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
-    const [uniqueDecorationTypes, setUniqueDecorationTypes] = useState<Set<string>>(new Set());
+    const [uniqueDecorationTypes, setUniqueDecorationTypes] = useState(new Set<string>());
     const [editingDecoration, setEditingDecoration] = useState<CakeDecoration | null>(null);
     const [formData, setFormData] = useState<Partial<CakeDecoration>>({});
     const [imageFile, setImageFile] = useState<File | null>(null);
@@ -29,23 +28,17 @@ const DecorationsPage: React.FC = () => {
         const url = expiryDate
             ? `http://127.0.0.1:8000/api/cakedecorations/search/?expiry_date=${expiryDate}`
             : 'http://127.0.0.1:8000/api/cakedecorations/';
-
         const response = await fetch(url);
         const data: CakeDecoration[] = await response.json();
         setDecorations(data);
-
-        if (data.length > 0) {
-            const cost = data.reduce((acc, decoration) => acc + parseFloat(decoration.purchase_price), 0);
-            setTotalCost(cost);
-            const types = new Set(data.map(decoration => decoration.decoration_type));
-            setUniqueDecorationTypes(types);
-        } else {
-            setTotalCost(0);
-            setUniqueDecorationTypes(new Set());
-        }
-
+        setTotalCost(data.reduce((acc, decoration) => acc + parseFloat(decoration.purchase_price), 0));
         setTotalCount(data.length);
+        setUniqueDecorationTypes(new Set(data.map((d) => d.decoration_type)));
     };
+
+    useEffect(() => {
+        fetchDecorations(expiryDate);
+    }, [expiryDate]);
 
     const handleEdit = (decoration: CakeDecoration) => {
         setEditingDecoration(decoration);
@@ -55,28 +48,21 @@ const DecorationsPage: React.FC = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        if (file) {
-            setImageFile(file);
-        }
+        if (file) setImageFile(file);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const formDataToSend = new FormData();
-
         for (const key in formData) {
-            formDataToSend.append(key, formData[key] as string);
+            formDataToSend.append(key, String(formData[key as keyof CakeDecoration]));
         }
-
-        if (imageFile) {
-            formDataToSend.append('image', imageFile);
-        }
-
+        if (imageFile) formDataToSend.append('image', imageFile);
         if (editingDecoration) {
             await fetch(`http://127.0.0.1:8000/api/cakedecorations/${editingDecoration.id}/`, {
                 method: 'PUT',
@@ -87,25 +73,51 @@ const DecorationsPage: React.FC = () => {
         }
     };
 
-    useEffect(() => {
-        fetchDecorations(expiryDate);
-    }, [expiryDate]);
-
     return (
-        <div>
-            <h1>Декорации для тортов</h1>
-            <input
-                type="date"
-                value={expiryDate}
-                onChange={(e) => setExpiryDate(e.target.value)}
-            />
-            <h2>Всего записей: {totalCount}</h2>
-            <h2>Уникальные типы декораций: {uniqueDecorationTypes.size}</h2>
-            <h2>Общая стоимость: {totalCost} ₽</h2>
+        <div className="decorations-page">
+            <h1 className="decorations-page__title">Декорации для тортов</h1>
+            <div className="decorations-page__filter">
+                <input
+                    type="date"
+                    value={expiryDate}
+                    onChange={(e) => setExpiryDate(e.target.value)}
+                    className="decorations-page__date"
+                />
+            </div>
+            <div className="decorations-page__info">
+                <p>Всего записей: {totalCount}</p>
+                <p>Уникальные типы декораций: {uniqueDecorationTypes.size}</p>
+                <p>Общая стоимость: {totalCost} ₽</p>
+            </div>
+            <div className="decorations-page__grid">
+                {decorations.map((decoration) => (
+                    <div key={decoration.id} className="decoration-card">
+                        <span className="decoration-card__quantity">
+                            Количество: {decoration.quantity} шт
+                        </span>
+                        {decoration.image && (
+                            <img src={decoration.image} alt={decoration.name} className="decoration-card__image" />
+                        )}
+                        <p className="decoration-card__name">{decoration.name}</p>
+                        <p>Артикул: {decoration.article}</p>
+                        <p>Основной поставщик: {decoration.main_supplier}</p>
+                        <p>Тип декорации: {decoration.decoration_type}</p>
+                        <p>Закупочная цена: {decoration.purchase_price} ₽</p>
+                        <p>Вес: {decoration.weight} г</p>
+                        <p>Срок годности: {decoration.expiry_date || 'Нет данных'}</p>
+                        <div className="decoration-card__buttons">
+                            <button onClick={() => handleEdit(decoration)} className="decoration-card__edit-button">
+                                Редактировать
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
 
             {editingDecoration && (
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="decorations-page__edit-form">
                     <h3>Редактировать декорацию</h3>
+                    <label>Наименование:</label>
                     <input
                         type="text"
                         name="name"
@@ -113,6 +125,7 @@ const DecorationsPage: React.FC = () => {
                         onChange={handleChange}
                         placeholder="Наименование"
                     />
+                    <label>Артикул:</label>
                     <input
                         type="text"
                         name="article"
@@ -120,6 +133,7 @@ const DecorationsPage: React.FC = () => {
                         onChange={handleChange}
                         placeholder="Артикул"
                     />
+                    <label>Единица измерения:</label>
                     <input
                         type="text"
                         name="unit_of_measurement"
@@ -127,6 +141,7 @@ const DecorationsPage: React.FC = () => {
                         onChange={handleChange}
                         placeholder="Единица измерения"
                     />
+                    <label>Количество:</label>
                     <input
                         type="number"
                         name="quantity"
@@ -134,6 +149,7 @@ const DecorationsPage: React.FC = () => {
                         onChange={handleChange}
                         placeholder="Количество"
                     />
+                    <label>Основной поставщик:</label>
                     <input
                         type="text"
                         name="main_supplier"
@@ -141,6 +157,7 @@ const DecorationsPage: React.FC = () => {
                         onChange={handleChange}
                         placeholder="Основной поставщик"
                     />
+                    <label>Тип декорации:</label>
                     <input
                         type="text"
                         name="decoration_type"
@@ -148,6 +165,7 @@ const DecorationsPage: React.FC = () => {
                         onChange={handleChange}
                         placeholder="Тип декорации"
                     />
+                    <label>Закупочная цена:</label>
                     <input
                         type="text"
                         name="purchase_price"
@@ -155,6 +173,7 @@ const DecorationsPage: React.FC = () => {
                         onChange={handleChange}
                         placeholder="Закупочная цена"
                     />
+                    <label>Вес:</label>
                     <input
                         type="number"
                         name="weight"
@@ -162,6 +181,7 @@ const DecorationsPage: React.FC = () => {
                         onChange={handleChange}
                         placeholder="Вес"
                     />
+                    <label>Срок годности:</label>
                     <input
                         type="date"
                         name="expiry_date"
@@ -169,33 +189,16 @@ const DecorationsPage: React.FC = () => {
                         onChange={handleChange}
                         placeholder="Срок годности"
                     />
+                    <label>Изображение:</label>
                     <input
                         type="file"
                         accept="image/*"
                         onChange={handleImageChange}
                     />
-                    <button type="submit">Сохранить</button>
-                    <button onClick={() => setEditingDecoration(null)}>Отменить</button>
+                    <button type="submit" className="decorations-page__save-button">Сохранить</button>
+                    <button type="button" onClick={() => setEditingDecoration(null)} className="decorations-page__cancel-button">Отменить</button>
                 </form>
             )}
-
-            <ul>
-                {decorations.map((decoration) => (
-                    <li key={decoration.id}>
-                        <strong>Наименование:</strong> {decoration.name}<br />
-                        <strong>Артикул:</strong> {decoration.article}<br />
-                        <strong>Единица измерения:</strong> {decoration.unit_of_measurement}<br />
-                        <strong>Количество:</strong> {decoration.quantity}<br />
-                        <strong>Основной поставщик:</strong> {decoration.main_supplier}<br />
-                        <strong>Тип декорации:</strong> {decoration.decoration_type}<br />
-                        <strong>Закупочная цена:</strong> {decoration.purchase_price} ₽<br />
-                        <strong>Вес:</strong> {decoration.weight} г<br />
-                        <strong>Срок годности:</strong> {decoration.expiry_date || 'Нет данных'}<br />
-                        {decoration.image && <img src={decoration.image} alt={decoration.name} style={{ width: '100px', height: '100px' }} />}
-                        <button onClick={() => handleEdit(decoration)}>Редактировать</button>
-                    </li>
-                ))}
-            </ul>
         </div>
     );
 };

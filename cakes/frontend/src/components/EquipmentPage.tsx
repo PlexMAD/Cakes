@@ -65,39 +65,55 @@ const EquipmentPage: React.FC = () => {
     };
 
     return (
-        <div>
-            <h1>Список инвентаря</h1>
-            <ul>
+        <div className="equipment">
+            <h1 className="equipment__title">Список инвентаря</h1>
+            <ul className="equipment__list">
                 {equipmentList.map((equipment) => (
-                    <li key={equipment.id}>
+                    <li key={equipment.id} className="equipment__item">
                         {equipment.type_name} - {equipment.equipment_number}
-                        <button onClick={() => handleEditClick(equipment)}>Редактировать</button>
+                        <button
+                            className="equipment__edit-button"
+                            onClick={() => handleEditClick(equipment)}
+                        >
+                            Редактировать
+                        </button>
                     </li>
                 ))}
             </ul>
 
             {selectedEquipment && (
-                <div>
-                    <h2>Редактировать инвентарь</h2>
-                    <label>Инвентарный номер:</label>
-                    <input
-                        type="text"
-                        value={equipmentNumber}
-                        onChange={(e) => setEquipmentNumber(e.target.value)}
-                    />
+                <div className="equipment__edit-section">
+                    <h2 className="equipment__edit-title">Редактировать инвентарь</h2>
+                    <div className="equipment__form">
+                        <label className="equipment__label">
+                            Инвентарный номер:
+                            <input
+                                type="text"
+                                value={equipmentNumber}
+                                onChange={(e) => setEquipmentNumber(e.target.value)}
+                                className="equipment__input"
+                            />
+                        </label>
 
-                    <label>Тип:</label>
-                    <select value={type} onChange={(e) => setType(Number(e.target.value))}>
-                        <option value="">Выберите тип</option>
-                        {equipmentTypes.map((type) => (
-                            <option key={type.id} value={type.id}>
-                                {type.name}
-                            </option>
-                        ))}
-                    </select>
+                        <label className="equipment__label">
+                            Тип:
+                            <select
+                                value={type}
+                                onChange={(e) => setType(Number(e.target.value))}
+                                className="equipment__select"
+                            >
+                                <option value="">Выберите тип</option>
+                                {equipmentTypes.map((type) => (
+                                    <option key={type.id} value={type.id}>
+                                        {type.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
 
-                    <button onClick={handleSave}>Сохранить</button>
-                    <button onClick={() => setSelectedEquipment(null)}>Отмена</button>
+                        <button onClick={handleSave} className="equipment__save-button">Сохранить</button>
+                        <button onClick={() => setSelectedEquipment(null)} className="equipment__cancel-button">Отмена</button>
+                    </div>
                 </div>
             )}
         </div>
