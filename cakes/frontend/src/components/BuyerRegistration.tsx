@@ -6,7 +6,8 @@ const BuyerRegistration: React.FC = () => {
     const [password, setPassword] = useState<string>('');
     const [fullName, setFullName] = useState<string>('');
     const [photo, setPhoto] = useState<File | null>(null);
-    const [photoPreview, setPhotoPreview] = useState<string | null>(null); // Добавлено для отображения превью
+    const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+    const [passwordError, setPasswordError] = useState<string | null>(null);
 
     const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files ? e.target.files[0] : null;
@@ -20,14 +21,29 @@ const BuyerRegistration: React.FC = () => {
         }
     };
 
+    const isPasswordValid = (password: string) => {
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const isCorrectLength = password.length >= 5 && password.length <= 20;
+        const doesNotContainLogin = !password.includes(login);
+        return hasUpperCase && hasLowerCase && isCorrectLength && doesNotContainLogin;
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!isPasswordValid(password)) {
+            setPasswordError('Пароль должен быть от 5 до 20 символов, содержать заглавные и маленькие буквы, и не содержать логин');
+            return;
+        }
+
+        setPasswordError(null);
 
         const formData = new FormData();
         formData.append('login', login);
         formData.append('password', password);
         formData.append('full_name', fullName);
-        formData.append('role', 'buyer');
+        formData.append('role', 'Заказчик');
         if (photo) {
             formData.append('photo', photo);
         }
@@ -72,6 +88,7 @@ const BuyerRegistration: React.FC = () => {
                     className="registration__input"
                     required
                 />
+                {passwordError && <p className="registration__error">{passwordError}</p>}
                 <label className="registration__label">
                     Загрузите фото профиля
                     <input
