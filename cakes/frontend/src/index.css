@@ -197,7 +197,7 @@ body, html {
 /*Registration*/
 /*EquipmentPage*/
 .equipment {
-  max-width: 600px;
+  max-width: 800px;
   padding: 20px;
   background-color: #FFAA4C;
   border-radius: 10px;
@@ -288,7 +288,8 @@ body, html {
 
 /* Кнопки сохранения и отмены */
 .equipment__save-button,
-.equipment__cancel-button {
+.equipment__cancel-button,
+.equipment__add-button {
   padding: 8px 12px;
   font-size: 16px;
   border: none;

@@ -142,7 +142,7 @@ const IngredientsPage: React.FC = () => {
                             >
                                 Редактировать
                             </button>
-                            <button className="ingredient-card__delete-button">Удалить</button>
+                            {/* <button className="ingredient-card__delete-button">Удалить</button> */}
                         </div>
                     </div>
                 ))}
