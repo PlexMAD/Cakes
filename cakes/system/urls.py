@@ -14,6 +14,7 @@ router.register(r'equipment', EquipmentViewSet)
 router.register(r'equipmenttype', EquipmentTypeViewSet)
 router.register(r'ingredients', IngredientsViewSet)
 router.register(r'cakedecorations', CakeDecorationViewSet)
+router.register(r'supplier', SupplierViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

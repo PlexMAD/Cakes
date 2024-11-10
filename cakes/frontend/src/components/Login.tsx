@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/logo.png'; // Укажите путь к логотипу
 
 interface LoginProps {
     setUserRole: (role: string) => void;
@@ -45,25 +46,30 @@ const Login: React.FC<LoginProps> = ({ setUserRole }) => {
     }, [attempts]);
 
     return (
-        <div>
-            <h2>Вход в систему</h2>
-            <input
-                type="text"
-                placeholder="Логин"
-                value={login}
-                onChange={(e) => setLogin(e.target.value)}
-                disabled={isBlocked}
-            />
-            <input
-                type="password"
-                placeholder="Пароль"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                disabled={isBlocked}
-            />
-            <button onClick={handleLogin} disabled={isBlocked}>Войти</button>
-            {error && <p>{error}</p>}
-            {isBlocked && <p>Форма заблокирована на 5 секунд</p>}
+        <div className="center-container">
+            <div className="login">
+                <img src={logo} alt="Логотип" className="login__logo" />
+                <h2 className="login__title">Войти в аккаунт</h2>
+                <input
+                    type="text"
+                    placeholder="Логин"
+                    value={login}
+                    onChange={(e) => setLogin(e.target.value)}
+                    disabled={isBlocked}
+                    className="login__input"
+                />
+                <input
+                    type="password"
+                    placeholder="Пароль"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    disabled={isBlocked}
+                    className="login__input"
+                />
+                <button onClick={handleLogin} disabled={isBlocked} className="login__button">Вход</button>
+                {error && <p className="login__error">{error}</p>}
+                {isBlocked && <p className="login__blocked">Форма заблокирована на 5 секунд</p>}
+            </div>
         </div>
     );
 };

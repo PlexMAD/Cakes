@@ -6,12 +6,12 @@ const MasterDashboard: React.FC = () => {
         window.location.reload();
     };
 
-    return (
-        <div>
-            <h1>Buyer Dashboard</h1>
-            <button onClick={handleLogout}>Logout</button>
-        </div>
-    );
+return (
+    <div className="dashboard">
+        <h1 className="dashboard__title">Buyer Dashboard</h1>
+        <button onClick={handleLogout} className="dashboard__logout-button">Выйти</button>
+    </div>
+);
 }
 
 export default MasterDashboard;

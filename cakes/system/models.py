@@ -75,7 +75,7 @@ class Ingredient(models.Model):
     gost = models.CharField(max_length=50, verbose_name="ГОСТ", null=True, blank=True)
     packing = models.CharField(max_length=100, verbose_name="Фасовка")
     characteristic = models.TextField(verbose_name="Характеристика", null=True, blank=True)
-    expiry_date = models.DateField(null=True, blank=True, verbose_name="Срок годности")  # Новое поле
+    expiry_date = models.DateField(null=True, blank=True, verbose_name="Срок годности")
 
     def __str__(self):
         return self.name
@@ -137,6 +137,11 @@ class Equipment(models.Model):
     id = models.AutoField(primary_key=True)
     equipment_number = models.CharField(max_length=100, verbose_name="Инвентарный номер")
     type = models.ForeignKey(EquipmentType, on_delete=models.CASCADE, verbose_name="Тип оборудования")
+    description = models.CharField(max_length=200, blank=True, null=True)
+    durability = models.CharField(max_length=200, blank=True, null=True)
+    main_supplier = models.ForeignKey('Supplier', on_delete=models.CASCADE, blank=True, null=True)
+    purchase_date = models.DateField(db_column='purchase_date', blank=True, null=True)
+    quantity = models.PositiveIntegerField(blank=True, null=True)
 
 
 class OperationsSpecification(models.Model):

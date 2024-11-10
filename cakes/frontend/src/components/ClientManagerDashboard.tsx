@@ -7,9 +7,9 @@ const ClientManagerDashboard: React.FC = () => {
     };
 
     return (
-        <div>
-            <h1>Client Manager Dashboard</h1>
-            <button onClick={handleLogout}>Logout</button>
+        <div className="dashboard">
+            <h1 className="dashboard__title">Client Manager Dashboard</h1>
+            <button onClick={handleLogout} className="dashboard__logout-button">Выйти</button>
         </div>
     );
 }

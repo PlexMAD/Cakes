@@ -34,6 +34,11 @@ class EquipmentTypeViewSet(viewsets.ModelViewSet):
     serializer_class = EquipmentTypeSerializer
 
 
+class SupplierViewSet(viewsets.ModelViewSet):
+    queryset = Supplier.objects.all()
+    serializer_class = SupplierSerializer
+
+
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 

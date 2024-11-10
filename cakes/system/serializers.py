@@ -16,7 +16,8 @@ class EquipmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Equipment
-        fields = ['id', 'equipment_number', 'type', 'type_name']
+        fields = ['id', 'equipment_number', 'type', 'type_name', 'description', 'durability', 'main_supplier',
+                  'purchase_date', 'quantity']
 
 
 class EquipmentTypeSerializer(serializers.ModelSerializer):
@@ -34,6 +35,12 @@ class IngredientSerializer(serializers.ModelSerializer):
 class CakeDecorationSerializer(serializers.ModelSerializer):
     class Meta:
         model = CakeDecoration
+        fields = '__all__'
+
+
+class SupplierSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Supplier
         fields = '__all__'
 
 
