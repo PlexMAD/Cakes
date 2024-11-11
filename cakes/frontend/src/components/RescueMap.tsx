@@ -21,6 +21,7 @@ const RescueMap: React.FC = () => {
   const [availablePoints, setAvailablePoints] = useState<MapPoint[]>([]);
   const [selectedPointForPlacement, setSelectedPointForPlacement] = useState<MapPoint | null>(null);
   const [grid, setGrid] = useState<(MapPoint | null)[][]>(Array.from({ length: 10 }, () => Array(10).fill(null)));
+  const [rotation, setRotation] = useState<number>(0);
 
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/api/workshop/')
@@ -53,13 +54,6 @@ const RescueMap: React.FC = () => {
     setGrid(newGrid);
   };
 
-  const movePoint = (pointId: number, x: number, y: number) => {
-    const updatedGrid = grid.map(row => row.map(cell => (cell && cell.id === pointId ? null : cell)));
-    updatedGrid[x][y] = workshopPoints.find(point => point.id === pointId) || null;
-    setGrid(updatedGrid);
-    axios.patch(`http://127.0.0.1:8000/api/workshop_points/${pointId}/`, { x_axis: x, y_axis: y });
-  };
-
   const deletePoint = (pointId: number) => {
     setWorkshopPoints(workshopPoints.filter(point => point.id !== pointId));
     setGrid(grid.map(row => row.map(cell => (cell && cell.id === pointId ? null : cell))));
@@ -87,9 +81,13 @@ const RescueMap: React.FC = () => {
     }
   };
 
+  const rotateMap = () => {
+    setRotation((prevRotation) => (prevRotation + 90) % 360);
+  };
+
   return (
     <div>
-      <h1>Select a Workshop</h1>
+      <h1>Выберите цех</h1>
       <ul>
         {workshops.map(workshop => (
           <li key={workshop.id} onClick={() => selectWorkshop(workshop.id)}>
@@ -99,9 +97,10 @@ const RescueMap: React.FC = () => {
       </ul>
       {selectedWorkshop && (
         <div>
-          <h2>Map for Workshop {selectedWorkshop}</h2>
+          <h2>Карта для цеха {selectedWorkshop}</h2>
+          <button onClick={rotateMap}>Повернуть 90°</button>
           <div style={{ display: 'flex', gap: '20px' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(10, 50px)', gap: '5px' }}>
+            <div style={{ transform: `rotate(${rotation}deg)`, transition: 'transform 0.3s', display: 'grid', gridTemplateColumns: 'repeat(10, 50px)', gap: '5px' }}>
               {grid.map((row, rowIndex) =>
                 row.map((point, colIndex) => (
                   <div
@@ -129,7 +128,7 @@ const RescueMap: React.FC = () => {
               )}
             </div>
             <div>
-              <h3>Available Points</h3>
+              <h3>Доступные метки</h3>
               <ul>
                 {availablePoints.map(point => (
                   <li

@@ -18,6 +18,8 @@ router.register(r'supplier', SupplierViewSet)
 router.register(r'points', PointsViewSet)
 router.register(r'workshop', WorkshopViewSet)
 router.register(r'workshop_points', WorkshopPointsViewSet)
+router.register(r'order', OrderViewSet)
+router.register(r'status', StatusViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

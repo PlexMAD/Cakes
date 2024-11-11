@@ -115,17 +115,23 @@ class SemiproductsSpecification(models.Model):
         db_table = 'SemiproductsSpecification'
 
 
+class Status(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, verbose_name="Название")
+
+
 class Order(models.Model):
     id = models.AutoField(primary_key=True)
     number = models.CharField(max_length=100, verbose_name="Номер")
     date = models.DateField(db_column='date', blank=True, null=True)
-    name = models.CharField(max_length=255)  # Define max_length here
+    name = models.CharField(max_length=255)
     product = models.ForeignKey(Product, models.DO_NOTHING, db_column='product')
     buyer = models.ForeignKey(Users, models.DO_NOTHING, db_column='buyer', related_name='orders_as_buyer')
     manager = models.ForeignKey(Users, models.DO_NOTHING, db_column='manager', related_name='orders_as_manager')
     price = models.DecimalField(db_column='price', max_digits=10, decimal_places=2)
     deadline = models.DateField(db_column='deadline', blank=True, null=True)
     examples = models.CharField(max_length=100, verbose_name="Примеры")
+    status = models.ForeignKey(Status, models.DO_NOTHING, db_column='Статус', null=True)
 
 
 class EquipmentType(models.Model):
