@@ -182,7 +182,7 @@ const EquipmentPage: React.FC = () => {
                         </label>
 
                         <label className="equipment__label">
-                            Долговечность:
+                            Прочность:
                             <input
                                 type="text"
                                 value={durability}
@@ -272,7 +272,7 @@ const EquipmentPage: React.FC = () => {
                 </label>
 
                 <label className="equipment__label">
-                    Долговечность:
+                    Прочность:
                     <input
                         type="text"
                         value={durability}

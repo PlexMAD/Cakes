@@ -151,3 +151,30 @@ class OperationsSpecification(models.Model):
     equipment_type = models.ForeignKey(EquipmentType, on_delete=models.CASCADE, verbose_name="Тип оборудования")
     operation_number = models.CharField(max_length=50, verbose_name="Код операции")
     time_required = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Время на операцию")
+
+
+class MapPoint(models.Model):
+    id = models.AutoField(primary_key=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True, verbose_name="Изображение")
+
+    class Meta:
+        db_table = 'z_points'
+
+
+class Workshop(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, verbose_name="Название")
+    points = models.ManyToManyField('MapPoint', through='WorkshopMapPoint', related_name='workshops')
+
+    class Meta:
+        db_table = 'z_workshop'
+
+
+class WorkshopMapPoint(models.Model):
+    workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE, db_column='workshop')
+    map_point = models.ForeignKey(MapPoint, on_delete=models.CASCADE, db_column='map_point')
+    x_axis = models.IntegerField(null=True, blank=True)
+    y_axis = models.IntegerField(null=True, blank=True)
+
+    class Meta:
+        db_table = 'z_workshop_map_points'

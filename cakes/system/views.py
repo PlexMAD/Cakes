@@ -1,10 +1,11 @@
 from datetime import datetime
 
 from django.shortcuts import render
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .models import *
@@ -37,6 +38,28 @@ class EquipmentTypeViewSet(viewsets.ModelViewSet):
 class SupplierViewSet(viewsets.ModelViewSet):
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer
+
+
+class PointsViewSet(viewsets.ModelViewSet):
+    queryset = MapPoint.objects.all()
+    serializer_class = PointsSerializer
+
+
+class WorkshopViewSet(viewsets.ModelViewSet):
+    queryset = Workshop.objects.all()
+    serializer_class = WorkshopSerializer
+
+
+class WorkshopPointsViewSet(viewsets.ModelViewSet):
+    queryset = WorkshopMapPoint.objects.all()
+    serializer_class = WorkshopPointsSerializer
+
+    def get_queryset(self):
+        workshop_id = self.request.query_params.get('workshop')
+        queryset = WorkshopMapPoint.objects.all()
+        if workshop_id is not None:
+            queryset = queryset.filter(workshop_id=workshop_id)
+        return queryset
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):

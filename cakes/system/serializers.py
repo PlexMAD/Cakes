@@ -58,3 +58,21 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         except Users.DoesNotExist:
             raise serializers.ValidationError('Неверный логин.')
+
+
+class PointsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MapPoint
+        fields = '__all__'
+
+
+class WorkshopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Workshop
+        fields = '__all__'
+
+
+class WorkshopPointsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WorkshopMapPoint
+        fields = '__all__'
