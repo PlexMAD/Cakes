@@ -15,6 +15,7 @@ import IngredientsPage from './components/IngredientsPage';
 import DecorationsPage from './components/DecorationsPage';
 import RescueMap from './components/RescueMap';
 import OrderPage from './components/OrderPage';
+import OrderManagerPage from './components/OrderManagerPage';
 
 function App() {
   const [userRole, setUserRole] = useState<string | null>(null);
@@ -71,7 +72,10 @@ function App() {
         <Route path="/reg-panel" element={<PrivateRoute component={BuyerRegistration} role={"Менеджер по работе с клиентами"} userRole={userRole} />} />
         <Route path="/ingredient-page" element={<PrivateRoute component={IngredientsPage} role={"Директор"} userRole={userRole} canAccess={canAccessIngredientsAndDecorations} />} />
         <Route path="/decoration-page" element={<PrivateRoute component={DecorationsPage} role={"Директор"} userRole={userRole} canAccess={canAccessIngredientsAndDecorations} />} />
+        
         <Route path="/orders" element={<PrivateRoute component={OrderPage} role={"Заказчик"} userRole={userRole} />} />
+        <Route path="/orders-manager" element={<PrivateRoute component={OrderManagerPage} role={"Менеджер по работе с клиентами"} userRole={userRole} />} />
+
         <Route path="/map" element={<PrivateRoute component={RescueMap} role={"Директор"} userRole={userRole} />} />
         <Route path="/clientmanager-panel" element={<PrivateRoute component={ClientManagerDashboard} role={"Менеджер по работе с клиентами"} userRole={userRole} />} />
         <Route path="/purchasemanager-panel" element={<PrivateRoute component={PurchasesManagerDashboard} role={"Менеджер по закупкам"} userRole={userRole} />} />

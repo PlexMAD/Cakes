@@ -146,15 +146,10 @@ const OrderPage: React.FC = () => {
   
     const productId = 1;  
     const price = 1000;    
-  
-
     const currentDate = new Date().toISOString().split('T')[0]; 
-
     const deadline = new Date();
     deadline.setDate(deadline.getDate() + 7);
     const deadlineDate = deadline.toISOString().split('T')[0]; 
-  
-
     const statusId = 1;
   
     try {
@@ -168,9 +163,9 @@ const OrderPage: React.FC = () => {
         price,
         product: productId,
         buyer: currentUser.id,
-        date: currentDate,  // Текущая дата
-        deadline: deadlineDate,  // Дедлайн через 7 дней
-        status: statusId,  // Статус "Новый"
+        date: currentDate,
+        deadline: deadlineDate,
+        status: statusId,
       });
       alert('Заказ создан успешно');
   
@@ -187,6 +182,16 @@ const OrderPage: React.FC = () => {
       alert('Заказ удален');
     } catch (error) {
       console.error('Ошибка при удалении заказа:', error);
+    }
+  };
+
+  const handleCancelOrder = async (orderId: number) => {
+    try {
+      await axios.patch(`http://127.0.0.1:8000/api/order/${orderId}/`, { status: 2 });
+      setOrders(prevOrders => prevOrders.map(order => order.id === orderId ? { ...order, status: 2 } : order));
+      alert('Статус заказа изменен на "Отменен"');
+    } catch (error) {
+      console.error('Ошибка при изменении статуса заказа:', error);
     }
   };
 
@@ -224,6 +229,9 @@ const OrderPage: React.FC = () => {
                     {order.status === 1 && (
                       <button onClick={() => handleDeleteOrder(order.id)}>Удалить</button>
                     )}
+                    {(order.status === 3 || order.status === 4) && (
+                      <button onClick={() => handleCancelOrder(order.id)}>Отменить заказ</button>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -234,26 +242,28 @@ const OrderPage: React.FC = () => {
           <form onSubmit={handleCreateOrder}>
             <label>
               Наименование:
-              <input value={name} onChange={(e) => setName(e.target.value)} required />
+              <input value={name} onChange={(e) => setName(e.target.value)} />
             </label>
             <label>
               Описание:
-              <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+              <input value={description} onChange={(e) => setDescription(e.target.value)} />
             </label>
             <label>
-              Размеры:
-              <input value={dimensions} onChange={(e) => setDimensions(e.target.value)} required />
+              Габариты:
+              <input value={dimensions} onChange={(e) => setDimensions(e.target.value)} />
             </label>
             <label>
-              Примеры изделий:
-              <input value={examples} onChange={(e) => setExamples(e.target.value)} required />
+              Примеры:
+              <input value={examples} onChange={(e) => setExamples(e.target.value)} />
             </label>
             <label>
               Ответственный менеджер:
-              <select value={managerId || ''} onChange={(e) => setManagerId(Number(e.target.value))} required>
+              <select value={managerId || ''} onChange={(e) => setManagerId(parseInt(e.target.value, 10))}>
                 <option value="">Выберите менеджера</option>
-                {managers.map(manager => (
-                  <option key={manager.id} value={manager.id}>{manager.full_name}</option>
+                {managers.map((manager) => (
+                  <option key={manager.id} value={manager.id}>
+                    {manager.full_name}
+                  </option>
                 ))}
               </select>
             </label>
