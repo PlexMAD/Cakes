@@ -87,7 +87,6 @@ const IngredientsPage: React.FC = () => {
             if (response.ok) {
                 const updatedIngredient: Ingredient = await response.json();
                 
-                // Обновляем элемент в списке ингредиентов без полной перезагрузки
                 setIngredients(prevIngredients =>
                     prevIngredients.map(ingredient =>
                         ingredient.id === updatedIngredient.id ? updatedIngredient : ingredient

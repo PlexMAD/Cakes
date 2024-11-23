@@ -5,7 +5,7 @@ interface PrivateRouteProps {
   component: React.ComponentType;
   role: string;
   userRole: string | null;
-  canAccess?: boolean; // Добавлен новый пропс для контроля доступа
+  canAccess?: boolean;
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, role, userRole, canAccess }) => {
