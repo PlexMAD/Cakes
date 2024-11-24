@@ -184,3 +184,10 @@ class WorkshopMapPoint(models.Model):
 
     class Meta:
         db_table = 'z_workshop_map_points'
+
+
+class QualityAssurance(models.Model):
+    id = models.AutoField(primary_key=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    parameter = models.CharField(max_length=100)
+    assured = models.BooleanField()

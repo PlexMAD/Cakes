@@ -83,6 +83,7 @@ function App() {
         <Route path="/orders-master" element={<PrivateRoute component={OrderMasterPage} role={"Мастер"} userRole={userRole} />} />
 
         <Route path="/map" element={<PrivateRoute component={RescueMap} role={"Директор"} userRole={userRole} />} />
+        
         <Route path="/clientmanager-panel" element={<PrivateRoute component={ClientManagerDashboard} role={"Менеджер по работе с клиентами"} userRole={userRole} />} />
         <Route path="/purchasemanager-panel" element={<PrivateRoute component={PurchasesManagerDashboard} role={"Менеджер по закупкам"} userRole={userRole} />} />
         <Route path="/master-panel" element={<PrivateRoute component={MasterDashboard} role={"Мастер"} userRole={userRole} />} />

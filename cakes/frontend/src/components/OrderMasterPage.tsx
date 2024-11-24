@@ -52,6 +52,14 @@ const OrderMasterPage: React.FC = () => {
             console.error('Ошибка при изменении статуса заказа:', error);
         }
     };
+    const assureQuality = async (orderId: number) => {
+        try {
+
+        }
+        catch (error) {
+            console.error('Ошибка')
+        }
+    }
 
     return (
         <div>
@@ -86,6 +94,11 @@ const OrderMasterPage: React.FC = () => {
                                     {order.status === 7 && (
                                         <button onClick={() => handleStatusChange(order.id, 8)}>
                                             Перевести на "Готов"
+                                        </button>
+                                    )}
+                                    {order.status === 7 && (
+                                        <button onClick={() => assureQuality(order.id)}>
+                                            Провести проверку качества
                                         </button>
                                     )}
                                 </td>

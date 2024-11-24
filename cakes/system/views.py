@@ -72,6 +72,11 @@ class StatusViewSet(viewsets.ModelViewSet):
     serializer_class = StatusSerializer
 
 
+class QualityAssuranceViewSet(viewsets.ModelViewSet):
+    queryset = QualityAssurance.objects.all()
+    serializer_class = QualityAssuranceSerializer
+
+
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 

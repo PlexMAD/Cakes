@@ -69,7 +69,7 @@ const OrderPurchaseManagerPage: React.FC = () => {
                 </thead>
                 <tbody>
                     {orders
-                        .filter(order => order.status === 5) // Фильтр по статусу "Закупка"
+                        .filter(order => order.status === 5) 
                         .map(order => (
                             <tr key={order.id}>
                                 <td>{order.id}</td>

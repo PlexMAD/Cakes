@@ -88,3 +88,9 @@ class StatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = Status
         fields = '__all__'
+
+
+class QualityAssuranceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QualityAssurance
+        fields = '__all__'
