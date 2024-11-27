@@ -86,6 +86,9 @@ class Product(models.Model):
     name = models.CharField(max_length=200, verbose_name="Наименование")
     size = models.CharField(max_length=200)
 
+    class Meta:
+        db_table = 'w_Product'
+
 
 class IngredientsSpecification(models.Model):
     product = models.ForeignKey(Product, models.DO_NOTHING, db_column='product')
@@ -93,7 +96,7 @@ class IngredientsSpecification(models.Model):
     quantity = models.DecimalField(db_column='quantity', max_digits=10, decimal_places=2)
 
     class Meta:
-        db_table = 'IngredientsSpecification'
+        db_table = 'w_IngredientsSpecification'
 
 
 class CakeDecorationSpecification(models.Model):
@@ -102,7 +105,7 @@ class CakeDecorationSpecification(models.Model):
     quantity = models.DecimalField(db_column='quantity', max_digits=10, decimal_places=2)
 
     class Meta:
-        db_table = 'CakeDecorationSpecification'
+        db_table = 'w_CakeDecorationSpecification'
 
 
 class SemiproductsSpecification(models.Model):
@@ -112,7 +115,7 @@ class SemiproductsSpecification(models.Model):
     quantity = models.DecimalField(db_column='quantity', max_digits=10, decimal_places=2)
 
     class Meta:
-        db_table = 'SemiproductsSpecification'
+        db_table = 'w_SemiproductsSpecification'
 
 
 class Status(models.Model):

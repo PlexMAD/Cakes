@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.db import transaction
 from django.shortcuts import render
 from rest_framework import viewsets, status, generics
 from rest_framework.decorators import api_view, permission_classes, action
@@ -128,3 +129,41 @@ class CakeDecorationViewSet(viewsets.ModelViewSet):
         decorations = self.queryset.filter(expiry_date__lt=selected_date)
         serializer = self.get_serializer(decorations, many=True)
         return Response(serializer.data)
+
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+    @action(detail=True, methods=['get'])
+    def produce(self, request, pk=None):
+        product = self.get_object()
+        try:
+            with transaction.atomic():
+                ingredients_spec = IngredientsSpecification.objects.filter(product=product)
+                decorations_spec = CakeDecorationSpecification.objects.filter(product=product)
+                semiproducts_spec = SemiproductsSpecification.objects.filter(product=product)
+
+                for spec in ingredients_spec:
+                    ingredient = spec.ingredient
+                    if ingredient.quantity < spec.quantity:
+                        return Response({"error": f"Недостаточно: {ingredient.name}"},
+                                        status=status.HTTP_400_BAD_REQUEST)
+                    ingredient.quantity -= spec.quantity
+                    ingredient.save()
+
+                for spec in decorations_spec:
+                    decoration = spec.cake_decoration
+                    if decoration.quantity < spec.quantity:
+                        return Response({"error": f"Недостаточно: {decoration.name}"},
+                                        status=status.HTTP_400_BAD_REQUEST)
+                    decoration.quantity -= spec.quantity
+                    decoration.save()
+
+                for spec in semiproducts_spec:
+                    semiproduct = spec.semiproduct
+                    pass
+
+                return Response({"message": "Product successfully produced"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

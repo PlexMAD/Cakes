@@ -94,3 +94,9 @@ class QualityAssuranceSerializer(serializers.ModelSerializer):
     class Meta:
         model = QualityAssurance
         fields = '__all__'
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = '__all__'
