@@ -76,6 +76,12 @@ class StatusViewSet(viewsets.ModelViewSet):
 class QualityAssuranceViewSet(viewsets.ModelViewSet):
     queryset = QualityAssurance.objects.all()
     serializer_class = QualityAssuranceSerializer
+    def get_queryset(self):
+        order = self.request.query_params.get('order')
+        queryset = QualityAssurance.objects.all()
+        if order is not None:
+            queryset = queryset.filter(order=order)
+        return queryset
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
