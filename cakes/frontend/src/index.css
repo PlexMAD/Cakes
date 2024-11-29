@@ -209,7 +209,7 @@ body, html {
 .equipment__title {
   font-size: 28px;
   font-weight: bold;
-  color: #333;
+  color: #000;
   margin-bottom: 20px;
 }
 
@@ -551,3 +551,930 @@ body, html {
 
 /* DecorationsPage */
 
+/* Map */
+.map {
+  width: 100%;
+  max-width: 800px;
+  padding: 30px;
+  background-color: #FFAA4C;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+} 
+
+.map__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.map__list-item {
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  margin: 5px;
+  border: 3px solid #F7E7A4;
+}
+
+.map__list-item:hover {
+  background-color: #FFDC99;
+}
+
+.map__rotate-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: #FFF;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.map__rotate-button:hover {
+  background-color: #45a049;
+}
+
+.map__grid-cell {
+  width: 50px;
+  height: 50px;
+  background-color: #F7E7A4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+}
+
+.map__grid-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.map__marks {
+  width: 100%;
+  max-width: 800px;
+  padding: 30px;
+  border-radius: 10px;
+} 
+
+.map__available-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  border: 3px solid #F7E7A4; /* Аналогичный стиль */
+  border-radius: 5px;
+  background-color: transparent; /* Начальный цвет */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 5px 0; /* Для отступа между кнопками */
+  width: 100%;
+  max-width: 200px;
+}
+
+.map__available-item:hover {
+  background-color: #FFDC99; /* Подсветка при наведении */
+}
+
+/* Map */
+
+/* Orders Director */
+
+/* Блок: orders-director */
+.orders-director {
+  max-width: 1000px;
+  padding: 20px;
+  background-color: #FFAA4C;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+  box-sizing: border-box;
+}
+
+/* Элемент: orders-director__title */
+.orders-director__title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #000;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Элемент: orders-director__table */
+.orders-director__table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #FF8000; 
+  border-radius: 10px;
+  overflow: hidden;
+  border: 3px solid #FF8000; 
+}
+
+/* Элементы: заголовки таблицы */
+.orders-director__table-header {
+  background-color: #FF8000;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.orders-director__table-row {
+  transition: background-color 0.3s ease;
+}
+
+/* Элементы: ячейки таблицы */
+.orders-director__table-cell {
+  padding: 10px;
+  font-size: 14px;
+  border-bottom: 1px solid #e6e6e6;
+  color: #000;
+  font-weight: bold; 
+  text-align: center;
+}
+
+/* Модификатор для четных строк */
+.orders-director__table-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.orders-director__table-row:nth-child(even) {
+  background-color: #e6e6e6;
+}
+
+/* Модификатор для последней строки */
+.orders-director__table-row:last-child .orders-director__table-cell {
+  border-bottom: none;
+}
+
+/* Модификатор для ховера */
+.orders-director__table-row:hover {
+  background-color: #FFDC99; 
+}
+
+/* Элементы: ячейки с правым градиентом */
+.orders-director__table-cell {
+  border-right: 1px solid #000;
+  padding: 8px;
+}
+
+/* Элементы: последние ячейки без правого градиента */
+.orders-director__table-cell:last-child {
+  border-right: none;
+}
+
+/* Модификатор для увеличения ширины столбцов "Дата" и "Срок" */
+.orders-director__table-cell:nth-child(3),
+.orders-director__table-cell:nth-child(8),
+.orders-director__table-header:nth-child(3),
+.orders-director__table-header:nth-child(8) {
+  min-width: 120px;
+}
+
+/* Orders Director */
+
+/* Orders */
+.orders {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  padding: 20px;
+  background-color: #FFAA4C;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+  box-sizing: border-box;
+}
+
+.orders__title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.orders__table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #FF8000; 
+  border-radius: 10px;
+  overflow: hidden; 
+  border: 3px solid #FF8000;
+}
+
+.orders__table-head {
+  font-size: 18px;
+}
+
+.orders__table-header {
+  background-color: #FF8000;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.orders__table-row {
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.orders__table-cell {
+  line-height: 1;
+  padding: 1px;
+  border-bottom: 1px solid #e6e6e6;
+  color: #000;
+  font-weight: bold; 
+  text-align: center;
+  border-right: 1px solid #000;
+}
+
+/* Модификатор для последней строки */
+.orders__table-row:last-child .orders-director__table-cell {
+  border-bottom: none;
+}
+
+/* Элементы: последние ячейки без правого градиента */
+.orders__table-cell:last-child {
+  border-right: none;
+  border-bottom: none;
+}
+
+/* Модификатор для увеличения ширины столбцов "Дата" и "Срок" */
+.orders__table-cell:nth-child(2),
+.orders__table-cell:nth-child(6),
+.orders__table-header:nth-child(2), 
+.orders__table-header:nth-child(6) {
+  min-width: 120px;
+}
+
+.orders__table-row:nth-child(even) {
+  background-color: #e6e6e6;
+}
+
+.orders__table-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.orders__table-row:hover {
+  background-color: #ffdc99;
+}
+
+.orders__button {
+  width: 100px;
+  padding: 5px 10px;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.orders__button--delete {
+  background-color: red;
+  color: white;
+  border: none;
+}
+
+.orders__button--delete:hover {
+  background-color: #e53935;
+}
+
+.orders__button--cancel {
+  background-color: orange;
+  color: white;
+  border: none;
+}
+
+.orders__button--cancel:hover {
+  background-color: #fb8c00;
+}
+
+
+/* Форма */
+.orders__form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin-top: 10px;
+  margin-left: 300px;
+}
+
+.orders__form-label {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.orders__form-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.orders__form-button:hover {
+  background-color: #45a049;
+}
+
+/* Стиль для уведомлений и состояний */
+.orders__form-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.orders__form-input,
+.orders__form-select {
+  padding: 8px;
+  font-size: 14px;
+  background-color: #F7E7A4;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+/* Orders */
+
+/* Orders Manager */
+/* Общий стиль таблицы */
+.client-manager-orders {
+  display: flex;
+  flex-direction: column;
+  max-width: 1400px;
+  padding: 20px;
+  background-color: #FFAA4C;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+  box-sizing: border-box;
+}
+
+.client-manager-orders__title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.client-manager-orders__table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #FF8000;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 3px solid #FF8000;
+}
+
+.client-manager-orders__table-head {
+  font-size: 18px;
+}
+
+.client-manager-orders__table-header {
+  background-color: #FF8000;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.client-manager-orders__table-cell {
+  line-height: 3;
+  padding: 1px;
+  font-size: 14px;
+  border-bottom: 1px solid #e6e6e6;
+  color: #000;
+  font-weight: bold; 
+  text-align: center;
+  border-right: 1px solid #000;
+}
+
+.client-manager-orders__table-row:last-child .client-manager-orders__table-cell {
+  border-bottom: none;  
+}
+
+.client-manager-orders__table-cell:last-child {
+  border-bottom: none;
+  border-right: none;
+}
+
+.client-manager-orders__table-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.client-manager-orders__table-row:nth-child(even) {
+  background-color: #e6e6e6;
+}
+
+.client-manager-orders__table-row {
+  transition: background-color 0.3s ease;
+}
+
+
+.client-manager-orders__table-row:hover {
+  background-color: #ffdc99;
+}
+
+/* Модификатор для увеличения ширины столбца Действия */
+.client-manager-orders__table-cell:nth-child(8),
+.client-manager-orders__table-header:nth-child(8) {
+  min-width: 300px;
+}
+
+.client-manager-orders__table-cell--actions {
+  text-align: center;
+}
+
+/* Стили для кнопок */
+.client-manager-orders__table-action-button {
+  font-size: 14px;
+  padding: 5px 10px;
+  border: none;
+  color: #000;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0 5px;
+}
+
+.client-manager-orders__table-action-button--accept {
+  background-color: #28a745;
+}
+
+.client-manager-orders__table-action-button--accept:hover {
+  background-color: #218838;
+}
+
+.client-manager-orders__table-action-button--cancel {
+  background-color: #dc3545;
+}
+
+.client-manager-orders__table-action-button--cancel:hover {
+  background-color: #c82333;
+}
+
+/* Стиль кнопки "Отправить на подтверждение" */
+.client-manager-orders__table-action-button--verification {
+  background-color: #ffc107; /* Желтый */
+  color: #212529; /* Темный текст */
+}
+
+.client-manager-orders__table-action-button--verification:hover {
+  background-color: #e0a800;
+}
+
+/* Стиль кнопки "Отправить на закупку" */
+.client-manager-orders__table-action-button--approve {
+  background-color: #28a745; 
+}
+
+.client-manager-orders__table-action-button--approve:hover {
+  background-color: #218838;
+}
+
+/* Стиль кнопки "Выполнить" */
+.client-manager-orders__table-action-button--do {
+  background-color: #28a745; 
+}
+
+.client-manager-orders__table-action-button--do:hover {
+  background-color: #218838;
+}
+
+/* Стиль для сообщения "Ожидаем действий другого отдела" */
+.client-manager-orders__table-status-pending {
+  display: block; /* Блоковый элемент, чтобы текст отображался под статусом */
+  font-size: 10px; /* Немного меньше основного текста */
+  color: #6c757d; /* Серый цвет для ненавязчивого вида */
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  display: block;
+  white-space: nowrap;
+}
+/* Форма */
+.client-manager-orders__form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin-top: 10px;
+  margin-left: 425px;
+}
+
+.client-manager-orders__create-title {
+  display: flex;
+  margin-left: 540px;
+}
+
+.client-manager-orders__form-label {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.client-manager-orders__form-input,
+.client-manager-orders__form-select {
+  padding: 8px;
+  font-size: 14px;
+  background-color: #F7E7A4;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.client-manager-orders__form-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.client-manager-orders__form-button:hover {
+  background-color: #45a049;
+}
+
+/* Стиль для уведомлений и состояний */
+.client-manager-orders__form-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.client-manager-orders__form-select {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.client-manager-orders__form-input:focus,
+.client-manager-orders__form-select:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+/* Orders Manager */
+
+/* Purchase Manager */
+
+/* Общий стиль таблицы */
+.purchase-manager-orders {
+  display: flex;
+  flex-direction: column;
+  max-width: 1400px;
+  padding: 20px;
+  background-color: #FFAA4C;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+  box-sizing: border-box;
+}
+
+.purchase-manager-orders__title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.purchase-manager-orders__table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #FF8000;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 3px solid #FF8000;
+}
+
+.purchase-manager-orders__table-head {
+  font-size: 18px;
+}
+
+.purchase-manager-orders__table-header {
+  background-color: #FF8000;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.purchase-manager-orders__table-cell {
+  line-height: 3;
+  padding: 1px;
+  font-size: 14px;
+  border-bottom: 1px solid #e6e6e6;
+  color: #000;
+  font-weight: bold; 
+  text-align: center;
+  border-right: 1px solid #000;
+}
+
+.purchase-manager-orders__table-row:last-child .client-manager-orders__table-cell {
+  border-bottom: none;  
+}
+
+.purchase-manager-orders__table-cell:last-child {
+  border-bottom: none;
+  border-right: none;
+}
+
+.purchase-manager-orders__table-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.purchase-manager-orders__table-row:nth-child(even) {
+  background-color: #e6e6e6;
+}
+
+.purchase-manager-orders__table-row {
+  transition: background-color 0.3s ease;
+}
+
+
+.purchase-manager-orders__table-row:hover {
+  background-color: #ffdc99;
+}
+
+.purchase-manager-orders__table-cell--actions {
+  text-align: center;
+}
+
+/* Стили для кнопок */
+.purchase-manager-orders__table-action-button {
+  font-size: 14px;
+  padding: 5px 10px;
+  border: none;
+  color: #000;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0 5px;
+}
+
+.purchase-manager-orders__table-action-button--accept {
+  background-color: #28a745;
+}
+
+.purchase-manager-orders__table-action-button--accept:hover {
+  background-color: #218838;
+}
+
+/* Purchase Manager */
+
+/* Master */
+
+/* Общий стиль таблицы */
+.master-orders {
+  display: flex;
+  flex-direction: column;
+  max-width: 1400px;
+  padding: 20px;
+  background-color: #FFAA4C;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+  box-sizing: border-box;
+}
+
+.master-orders__title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.master-orders__table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #FF8000;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 3px solid #FF8000;
+}
+
+.master-orders__table-head {
+  font-size: 18px;
+}
+
+.master-orders__table-header {
+  background-color: #FF8000;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.master-orders__table-cell {
+  line-height: 3;
+  padding: 1px;
+  font-size: 14px;
+  border-bottom: 1px solid #e6e6e6;
+  color: #000;
+  font-weight: bold; 
+  text-align: center;
+  border-right: 1px solid #000;
+}
+
+.master-orders__table-row:last-child .client-manager-orders__table-cell {
+  border-bottom: none;  
+}
+
+.master-orders__table-cell:last-child {
+  border-bottom: none;
+  border-right: none;
+}
+
+.master-orders__table-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.master-orders__table-row:nth-child(even) {
+  background-color: #e6e6e6;
+}
+
+.master-orders__table-row {
+  transition: background-color 0.3s ease;
+}
+
+
+.master-orders__table-row:hover {
+  background-color: #ffdc99;
+}
+
+.master-orders__table-cell--actions {
+  text-align: center;
+}
+
+/* Стили для кнопок */
+.master-orders__table-action-button {
+  font-size: 14px;
+  padding: 5px 10px;
+  border: none;
+  color: #000;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0 5px;
+}
+
+.master-orders__table-action-button--complete {
+  background-color: #28a745;
+}
+
+.master-orders__table-action-button--complete:hover {
+  background-color: #218838;
+}
+
+.master-orders__table-action-button--check {
+  background-color: #ffc107;
+}
+
+.master-orders__table-action-button--check:hover {
+  background-color: #e0a800;
+}
+
+/* Стиль кнопки "Отправить на подтверждение" */
+.master-orders__table-action-button--contol {
+  background-color: #ffc107; /* Желтый */
+  color: #212529; /* Темный текст */
+}
+
+.master-orders__table-action-button--contol:hover {
+  background-color: #e0a800;
+}
+
+/* Форма */
+.master-orders-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin-top: 10px;
+  margin-left: 425px;
+}
+
+.master-orders-modal__content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease;
+}
+
+.master-orders-modal__title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 100px;
+  margin-bottom: 20px;
+  text-align: center;
+  display: flex;
+  margin-left: 310px;
+}
+
+.master-orders-modal__label {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #000;
+}
+
+.master-orders-modal__input,
+.master-orders-modal__textarea {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+  background: #F7E7A4;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.master-orders-modal__textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Фокус на полях */
+.master-orders-modal__input:focus,
+.master-orders-modal__textarea:focus {
+  border-color: #4caf50;
+  outline: none;
+  box-shadow: 0 0 4px rgba(76, 175, 80, 0.3);
+}
+
+.master-orders-modal__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  margin-bottom: 15px;
+  color: #000;
+}
+
+.master-orders-modal__checkbox-input {
+  width: 16px;
+  height: 16px;
+}
+
+.master-orders-modal__buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.master-orders-modal__button {
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.master-orders-modal__button--save {
+  background-color: #4caf50;
+  color: white;
+}
+
+.master-orders-modal__button--save:hover {
+  background-color: #45a049;
+}
+
+.master-orders-modal__button--cancel {
+  background-color: #dc3545;
+  color: white;
+}
+
+.master-orders-modal__button--cancel:hover {
+  background-color: #c82333;
+}
+
+/* Анимация */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Master */

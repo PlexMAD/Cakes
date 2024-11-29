@@ -54,31 +54,31 @@ const OrderPurchaseManagerPage: React.FC = () => {
     };
 
     return (
-        <div>
-            <h1>Список заказов для менеджера по закупкам</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Номер</th>
-                        <th>Дата</th>
-                        <th>Название</th>
-                        <th>Статус</th>
-                        <th>Действия</th>
+        <div className='purchase-manager-orders'>
+            <h1 className='purchase-manager-orders__title'>Список заказов для менеджера по закупкам</h1>
+            <table className='purchase-manager-orders__table'>
+                <thead className='purchase-manager-orders__table-head'>
+                    <tr className='purchase-manager-orders__table-row'>
+                        <th className='purchase-manager-orders__table-header'>ID</th>
+                        <th className='purchase-manager-orders__table-header'>Номер</th>
+                        <th className='purchase-manager-orders__table-header'>Дата</th>
+                        <th className='purchase-manager-orders__table-header'>Название</th>
+                        <th className='purchase-manager-orders__table-header'>Статус</th>
+                        <th className='purchase-manager-orders__table-header'>Действия</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='purchase-manager-orders__table-body'>
                     {orders
                         .filter(order => order.status === 5) 
                         .map(order => (
-                            <tr key={order.id}>
-                                <td>{order.id}</td>
-                                <td>{order.number}</td>
-                                <td>{order.date}</td>
-                                <td>{order.name}</td>
-                                <td>{getStatusName(order.status)}</td>
-                                <td>
-                                    <button onClick={() => handleStatusChange(order.id, 6)}>
+                            <tr className='purchase-manager-orders__table-row'key={order.id}>
+                                <td className='purchase-manager-orders__table-cell'>{order.id}</td>
+                                <td className='purchase-manager-orders__table-cell'>{order.number}</td>
+                                <td className='purchase-manager-orders__table-cell'>{order.date}</td>
+                                <td className='purchase-manager-orders__table-cell'>{order.name}</td>
+                                <td className='purchase-manager-orders__table-cell'>{getStatusName(order.status)}</td>
+                                <td className='purchase-manager-orders__table-cell--actions'>
+                                    <button className='purchase-manager-orders__table-action-button purchase-manager-orders__table-action-button--accept' onClick={() => handleStatusChange(order.id, 6)}>
                                         Перевести на "Производство"
                                     </button>
                                 </td>

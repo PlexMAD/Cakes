@@ -196,69 +196,65 @@ const OrderPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <h2>Мои заказы</h2>
+    <div className='orders'>
+      <h2 className='orders__title'>Мои заказы</h2>
       {currentUser ? (
         <div>
-          <table>
-            <thead>
+          <table className='orders__table'>
+            <thead className='orders__table-head'>
               <tr>
-                <th>Номер</th>
-                <th>Дата</th>
-                <th>Наименование</th>
-                <th>Статус</th>
-                <th>Стоимость</th>
-                <th>Дата выполнения</th>
-                <th>Ответственный менеджер</th>
-                <th>Имя заказчика</th>
-                <th>Действия</th>
+                <th className="orders__table-header">Номер</th>
+                <th className="orders__table-header">Дата</th>
+                <th className="orders__table-header">Наименование</th>
+                <th className="orders__table-header">Статус</th>
+                <th className="orders__table-header">Стоимость</th>
+                <th className="orders__table-header">Дата выполнения</th>
+                <th className="orders__table-header">Ответственный менеджер</th>
+                <th className="orders__table-header">Имя заказчика</th>
+                <th className="orders__table-header">Действия</th>
               </tr>
             </thead>
             <tbody>
               {userOrders.map((order) => (
-                <tr key={order.id}>
-                  <td>{order.number}</td>
-                  <td>{order.date}</td>
-                  <td>{order.name}</td>
-                  <td>{statuses[order.status] || 'Неизвестно'}</td>
-                  <td>{order.price}</td>
-                  <td>{order.deadline}</td>
-                  <td>{users[order.manager] || 'Неизвестно'}</td>
-                  <td>{users[order.buyer] || 'Неизвестно'}</td>
-                  <td>
-                    {order.status === 1 && (
-                      <button onClick={() => handleDeleteOrder(order.id)}>Удалить</button>
-                    )}
-                    {(order.status === 3 || order.status === 4) && (
-                      <button onClick={() => handleCancelOrder(order.id)}>Отменить заказ</button>
-                    )}
+                <tr key={order.id} className='orders__table-row'>
+                  <td className="orders__table-cell">{order.number}</td>
+                  <td className="orders__table-cell">{order.date}</td>
+                  <td className="orders__table-cell">{order.name}</td>
+                  <td className="orders__table-cell">{statuses[order.status] || 'Неизвестно'}</td>
+                  <td className="orders__table-cell">{order.price}</td>
+                  <td className="orders__table-cell">{order.deadline}</td>
+                  <td className="orders__table-cell">{users[order.manager] || 'Неизвестно'}</td>
+                  <td className="orders__table-cell">{users[order.buyer] || 'Неизвестно'}</td>
+                  <td className="orders__table-cell-button">
+                    <button className="orders__button orders__button--cancel" onClick={() => handleCancelOrder(order.id)}>Отменить</button>
+                    <button className="orders__button orders__button--delete" onClick={() => handleDeleteOrder(order.id)}>Удалить</button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
 
-          <h2>Создать новый заказ</h2>
-          <form onSubmit={handleCreateOrder}>
-            <label>
+          <h2 className='orders__create-title'>Создать новый заказ</h2>
+          <form className='orders__form' onSubmit={handleCreateOrder}>
+            <label className='orders__form-label'>
               Наименование:
-              <input value={name} onChange={(e) => setName(e.target.value)} />
+              <input className='orders__form-input' value={name} onChange={(e) => setName(e.target.value)} />
             </label>
-            <label>
+            <label className='orders__form-label'>
               Описание:
-              <input value={description} onChange={(e) => setDescription(e.target.value)} />
+              <input className='orders__form-input' value={description} onChange={(e) => setDescription(e.target.value)} />
             </label>
-            <label>
+            <label className='orders__form-label'>
               Габариты:
-              <input value={dimensions} onChange={(e) => setDimensions(e.target.value)} />
+              <input className='orders__form-input' value={dimensions} onChange={(e) => setDimensions(e.target.value)} />
             </label>
-            <label>
+            <label className='orders__form-label'>
               Примеры:
-              <input value={examples} onChange={(e) => setExamples(e.target.value)} />
+              <input className='orders__form-input' value={examples} onChange={(e) => setExamples(e.target.value)} />
             </label>
-            <label>
+            <label className='orders__form-label'>
               Ответственный менеджер:
-              <select value={managerId || ''} onChange={(e) => setManagerId(parseInt(e.target.value, 10))}>
+              <select className='orders__form-select' value={managerId || ''} onChange={(e) => setManagerId(parseInt(e.target.value, 10))}>
                 <option value="">Выберите менеджера</option>
                 {managers.map((manager) => (
                   <option key={manager.id} value={manager.id}>
@@ -267,7 +263,7 @@ const OrderPage: React.FC = () => {
                 ))}
               </select>
             </label>
-            <button type="submit">Создать заказ</button>
+            <button className='orders__form-button' type="submit">Создать заказ</button>
           </form>
         </div>
       ) : (
