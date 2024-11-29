@@ -194,4 +194,4 @@ class QualityAssurance(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     parameter = models.CharField(max_length=100)
     assured = models.BooleanField()
-    comment = models.TextField(null=True)
+    comment = models.TextField(null=True, blank=True)

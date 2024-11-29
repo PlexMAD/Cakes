@@ -11,6 +11,7 @@ interface Order {
     buyer: number;
     deadline: string;
     manager: number;
+    product: number
 }
 
 interface Status {
@@ -40,9 +41,11 @@ const OrderPurchaseManagerPage: React.FC = () => {
 
     const getStatusName = (statusId: number) => statuses.find(status => status.id === statusId)?.name || 'Неизвестно';
 
-    const handleStatusChange = async (orderId: number, newStatus: number) => {
+    const handleStatusChange = async (orderId: number, newStatus: number, orderProduct: number) => {
         try {
             await axios.patch(`http://127.0.0.1:8000/api/order/${orderId}/`, { status: newStatus });
+            await axios.get(`http://127.0.0.1:8000/api/product/${orderProduct}/produce/`)
+
             setOrders(prevOrders =>
                 prevOrders.map(order =>
                     order.id === orderId ? { ...order, status: newStatus } : order
@@ -71,14 +74,14 @@ const OrderPurchaseManagerPage: React.FC = () => {
                     {orders
                         .filter(order => order.status === 5) 
                         .map(order => (
-                            <tr className='purchase-manager-orders__table-row'key={order.id}>
+                            <tr  className='purchase-manager-orders__table-row' key={order.id}>
                                 <td className='purchase-manager-orders__table-cell'>{order.id}</td>
                                 <td className='purchase-manager-orders__table-cell'>{order.number}</td>
                                 <td className='purchase-manager-orders__table-cell'>{order.date}</td>
                                 <td className='purchase-manager-orders__table-cell'>{order.name}</td>
                                 <td className='purchase-manager-orders__table-cell'>{getStatusName(order.status)}</td>
-                                <td className='purchase-manager-orders__table-cell--actions'>
-                                    <button className='purchase-manager-orders__table-action-button purchase-manager-orders__table-action-button--accept' onClick={() => handleStatusChange(order.id, 6)}>
+                                <td>
+                                    <button className='purchase-manager-orders__table-action-button purchase-manager-orders__table-action-button--accept' onClick={() => handleStatusChange(order.id, 6, order.product)}>
                                         Перевести на "Производство"
                                     </button>
                                 </td>

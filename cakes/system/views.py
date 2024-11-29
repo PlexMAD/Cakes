@@ -6,6 +6,7 @@ from rest_framework import viewsets, status, generics
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.test import APIRequestFactory, force_authenticate
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -76,6 +77,7 @@ class StatusViewSet(viewsets.ModelViewSet):
 class QualityAssuranceViewSet(viewsets.ModelViewSet):
     queryset = QualityAssurance.objects.all()
     serializer_class = QualityAssuranceSerializer
+
     def get_queryset(self):
         order = self.request.query_params.get('order')
         queryset = QualityAssurance.objects.all()
@@ -168,8 +170,15 @@ class ProductViewSet(viewsets.ModelViewSet):
 
                 for spec in semiproducts_spec:
                     semiproduct = spec.semiproduct
-                    pass
-
+                    for i in range(0, int(spec.quantity)):
+                        factory = APIRequestFactory()
+                        sub_request = factory.post(f"/api/products/{semiproduct.id}/produce/")
+                        force_authenticate(sub_request, user=request.user)
+                        sub_response = ProductViewSet.as_view({'post': 'produce'})(sub_request, pk=semiproduct.id)
+                        if sub_response.status_code != status.HTTP_200_OK:
+                            return Response({"error": f"Unable to produce semiproduct: {semiproduct.name}"},
+                                            status=sub_response.status_code)
+                        semiproduct.save()
                 return Response({"message": "Product successfully produced"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
