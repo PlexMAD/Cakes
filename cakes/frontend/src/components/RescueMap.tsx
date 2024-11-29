@@ -72,7 +72,6 @@ const RescueMap: React.FC = () => {
       x_axis: x,
       y_axis: y
     });
-    setSelectedPointForPlacement(null);
   };
 
   const handlePointClick = (point: MapPoint) => {
@@ -86,11 +85,11 @@ const RescueMap: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className='map'>
       <h1>Выберите цех</h1>
-      <ul>
+      <ul className='map__list'>
         {workshops.map(workshop => (
-          <li key={workshop.id} onClick={() => selectWorkshop(workshop.id)}>
+          <li key={workshop.id} className='map__list-item' onClick={() => selectWorkshop(workshop.id)}>
             {workshop.name}
           </li>
         ))}
@@ -98,28 +97,20 @@ const RescueMap: React.FC = () => {
       {selectedWorkshop && (
         <div>
           <h2>Карта для цеха {selectedWorkshop}</h2>
-          <button onClick={rotateMap}>Повернуть 90°</button>
+          <button className='map__rotate-button' onClick={rotateMap}>Повернуть 90°</button>
           <div style={{ display: 'flex', gap: '20px' }}>
             <div style={{ transform: `rotate(${rotation}deg)`, transition: 'transform 0.3s', display: 'grid', gridTemplateColumns: 'repeat(10, 50px)', gap: '5px' }}>
               {grid.map((row, rowIndex) =>
                 row.map((point, colIndex) => (
                   <div
                     key={`${rowIndex}-${colIndex}`}
-                    style={{
-                      width: '50px',
-                      height: '50px',
-                      backgroundColor: 'lightgrey',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      border: '1px solid black'
-                    }}
+                    className='map__grid-cell'
                     onClick={() => addPointToGrid(rowIndex, colIndex)}
                   >
                     {point ? (
                       <div onClick={() => handlePointClick(point)}>
                         {point.image ? (
-                          <img src={point.image} alt="Point" style={{ width: '100%', height: '100%' }} />
+                          <img src={point.image} alt="Point" className='map__grid-image' />
                         ) : null}
                       </div>
                     ) : null}
@@ -127,19 +118,19 @@ const RescueMap: React.FC = () => {
                 ))
               )}
             </div>
-            <div>
+            <div className='map__marks'>
               <h3>Доступные метки</h3>
-              <ul>
+              <ul className='map__available-list'>
                 {availablePoints.map(point => (
                   <li
                     key={point.id}
+                    className={`map__available-item ${selectedPointForPlacement?.id === point.id ? 'selected' : ''}`}
                     onClick={() => setSelectedPointForPlacement(point)}
-                    style={{ cursor: 'pointer', margin: '5px', textAlign: 'center' }}
                   >
                     {point.image ? (
                       <img src={point.image} alt="Available Point" style={{ width: '50px', height: '50px' }} />
                     ) : (
-                      <div style={{ width: '50px', height: '50px', backgroundColor: 'grey' }} />
+                      <div style={{ width: '50px', height: '50px', backgroundColor: '#F7E7A4' }} />
                     )}
                   </li>
                 ))}

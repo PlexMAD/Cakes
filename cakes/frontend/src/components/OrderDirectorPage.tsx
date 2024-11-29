@@ -51,34 +51,34 @@ const OrderDirectorPage: React.FC = () => {
     const getStatusName = (statusId: number) => statuses.find(status => status.id === statusId)?.name || 'Неизвестно';
 
     return (
-        <div>
-            <h1>Список всех заказов</h1>
-            <table>
+        <div className="orders-director">
+            <h1 className="orders-director__title">Список всех заказов</h1>
+            <table className="orders-director__table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Номер</th>
-                        <th>Дата</th>
-                        <th>Название</th>
-                        <th>Статус</th>
-                        <th>Цена</th>
-                        <th>Покупатель</th>
-                        <th>Срок</th>
-                        <th>Менеджер</th>
+                        <th className="orders-director__table-header">ID</th>
+                        <th className="orders-director__table-header">Номер</th>
+                        <th className="orders-director__table-header">Дата</th>
+                        <th className="orders-director__table-header">Название</th>
+                        <th className="orders-director__table-header">Статус</th>
+                        <th className="orders-director__table-header">Цена</th>
+                        <th className="orders-director__table-header">Покупатель</th>
+                        <th className="orders-director__table-header">Срок</th>
+                        <th className="orders-director__table-header">Менеджер</th>
                     </tr>
                 </thead>
                 <tbody>
                     {orders.map(order => (
-                        <tr key={order.id}>
-                            <td>{order.id}</td>
-                            <td>{order.number}</td>
-                            <td>{order.date}</td>
-                            <td>{order.name}</td>
-                            <td>{getStatusName(order.status)}</td>
-                            <td>{order.price}</td>
-                            <td>{getUserName(order.buyer)}</td>
-                            <td>{order.deadline}</td>
-                            <td>{getUserName(order.manager)}</td>
+                        <tr key={order.id} className="orders-director__table-row">
+                            <td className="orders-director__table-cell">{order.id}</td>
+                            <td className="orders-director__table-cell">{order.number}</td>
+                            <td className="orders-director__table-cell">{order.date}</td>
+                            <td className="orders-director__table-cell">{order.name}</td>
+                            <td className="orders-director__table-cell">{getStatusName(order.status)}</td>
+                            <td className="orders-director__table-cell">{order.price}</td>
+                            <td className="orders-director__table-cell">{getUserName(order.buyer)}</td>
+                            <td className="orders-director__table-cell">{order.deadline}</td>
+                            <td className="orders-director__table-cell">{getUserName(order.manager)}</td>
                         </tr>
                     ))}
                 </tbody>

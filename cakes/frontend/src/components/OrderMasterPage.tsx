@@ -120,41 +120,41 @@ const OrderMasterPage: React.FC = () => {
     
 
     return (
-        <div>
-            <h1>Список заказов для мастера</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Номер</th>
-                        <th>Дата</th>
-                        <th>Название</th>
-                        <th>Статус</th>
-                        <th>Действия</th>
+        <div className='master-orders'>
+            <h1 className='master-orders__title'>Список заказов для мастера</h1>
+            <table className='master-orders__table'>
+                <thead className='master-orders__table-head'>
+                    <tr className='master-orders__table-row'>
+                        <th className='master-orders__table-header'>ID</th>
+                        <th className='master-orders__table-header'>Номер</th>
+                        <th className='master-orders__table-header'>Дата</th>
+                        <th className='master-orders__table-header'>Название</th>
+                        <th className='master-orders__table-header'>Статус</th>
+                        <th className='master-orders__table-header'>Действия</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='master-orders__table-body'>
                     {orders
                         .filter(order => [6, 7].includes(order.status))
                         .map(order => (
-                            <tr key={order.id}>
-                                <td>{order.id}</td>
-                                <td>{order.number}</td>
-                                <td>{order.date}</td>
-                                <td>{order.name}</td>
-                                <td>{getStatusName(order.status)}</td>
-                                <td>
+                            <tr className='master-orders__table-row' key={order.id}>
+                                <td className='master-orders__table-cell'>{order.id}</td>
+                                <td className='master-orders__table-cell'>{order.number}</td>
+                                <td className='master-orders__table-cell'>{order.date}</td>
+                                <td className='master-orders__table-cell'>{order.name}</td>
+                                <td className='master-orders__table-cell'>{getStatusName(order.status)}</td>
+                                <td className='master-orders__table-cell--actions'>
                                     {order.status === 6 && (
-                                        <button onClick={() => handleStatusChange(order.id, 7)}>
+                                        <button className='master-orders__table-action-button master-orders__table-action-button--contol'onClick={() => handleStatusChange(order.id, 7)}>
                                             Перевести на "Контроль"
                                         </button>
                                     )}
                                     {order.status === 7 && (
                                         <>
-                                            <button onClick={() => handleSetReady(order.id)}>
+                                            <button className='master-orders__table-action-button master-orders__table-action-button--complete' onClick={() => handleSetReady(order.id)}>
                                                 Перевести на "Готов"
                                             </button>
-                                            <button
+                                            <button className='master-orders__table-action-button master-orders__table-action-button--check'
                                                 onClick={() => {
                                                     setSelectedOrderId(order.id);
                                                     setModalOpen(true);
@@ -173,33 +173,36 @@ const OrderMasterPage: React.FC = () => {
             {modalOpen && (
                 <div className="modal">
                     <div className="modal-content">
-                        <h2>Проверка качества</h2>
-                        <label>
+                        <h2 className='master-orders-modal__title'>Проверка качества</h2>
+                        <label className='master-orders-modal__label'>
                             Параметр:
                             <input
                                 type="text"
+                                className='master-orders-modal__input'
                                 value={parameter}
                                 onChange={(e) => setParameter(e.target.value)}
                             />
                         </label>
-                        <label>
+                        <label className='master-orders-modal__checkbox'>
                             Проверено:
                             <input
                                 type="checkbox"
+                                className='master-orders-modal__checkbox-input'
                                 checked={assurance}
                                 onChange={(e) => setAssurance(e.target.checked)}
                             />
                         </label>
-                        <label>
+                        <label className='master-orders-modal__label'>
                             Комментарий:
                             <textarea
+                                className='master-orders-modal__textarea'
                                 value={comment}
                                 onChange={(e) => setComment(e.target.value)}
                             />
                         </label>
-                        <div>
-                            <button onClick={handleQualityCheck}>Сохранить</button>
-                            <button onClick={() => setModalOpen(false)}>Отмена</button>
+                        <div className='master-orders-modal__buttons'>
+                            <button className='master-orders-modal__button master-orders-modal__button--save' onClick={handleQualityCheck}>Сохранить</button>
+                            <button className='master-orders-modal__button master-orders-modal__button--cancel' onClick={() => setModalOpen(false)}>Отмена</button>
                         </div>
                     </div>
                 </div>

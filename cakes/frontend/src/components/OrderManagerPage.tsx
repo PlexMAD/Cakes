@@ -217,72 +217,80 @@ const OrderManagerPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Номер</th>
-            <th>Дата</th>
-            <th>Наименование</th>
-            <th>Статус</th>
-            <th>Стоимость</th>
-            <th>Дата выполнения</th>
-            <th>Имя заказчика</th>
-            <th>Действия</th>
+    <div className='client-manager-orders'>
+      <h2 className='client-manager-orders__title'>Мои заказы</h2>
+      <table className='client-manager-orders__table'>
+        <thead className='client-manager-orders__table-head'>
+          <tr className='client-manager-orders__table-row'>
+            <th className='client-manager-orders__table-header'>Номер</th>
+            <th className='client-manager-orders__table-header'>Дата</th>
+            <th className='client-manager-orders__table-header'>Наименование</th>
+            <th className='client-manager-orders__table-header'>Статус</th>
+            <th className='client-manager-orders__table-header'>Стоимость</th>
+            <th className='client-manager-orders__table-header'>Дата выполнения</th>
+            <th className='client-manager-orders__table-header'>Имя заказчика</th>
+            <th className='client-manager-orders__table-header'>Действия</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='client-manager-orders__table-body'>
           {userOrders.map((order) => (
-            <tr key={order.id}>
-              <td>{order.number}</td>
-              <td>{order.date}</td>
-              <td>{order.name}</td>
-              <td>{statuses[order.status] || 'Неизвестно'}</td>
-              <td>{order.price}</td>
-              <td>{order.deadline}</td>
-              <td>{users[order.buyer] || 'Неизвестно'}</td>
-              <td>
+            <tr className='client-manager-orders__table-row' key={order.id}>
+              <td className='client-manager-orders__table-cell'>{order.number}</td>
+              <td className='client-manager-orders__table-cell'>{order.date}</td>
+              <td className='client-manager-orders__table-cell'>{order.name}</td>
+              <td className='client-manager-orders__table-cell'>{statuses[order.status] || 'Неизвестно'}</td>
+              <td className='client-manager-orders__table-cell'>{order.price}</td>
+              <td className='client-manager-orders__table-cell'>{order.deadline}</td>
+              <td className='client-manager-orders__table-cell'>{users[order.buyer] || 'Неизвестно'}</td>
+              <td className='client-manager-orders__table-cell--actions'>
                 {order.status === 1 && (
-                  <button onClick={() => handleAcceptOrder(order.id)}>Принять</button>
+                  <button className='client-manager-orders__table-action-button client-manager-orders__table-action-button--accept' onClick={() => handleAcceptOrder(order.id)}>Принять</button>
                 )}
                 {(order.status === 1 || order.status === 4) && (
-                  <button onClick={() => handleCancelOrder(order.id)}>Отменить заказ</button>
+                  <button className='client-manager-orders__table-action-button client-manager-orders__table-action-button--cancel' onClick={() => handleCancelOrder(order.id)}>Отменить заказ</button>
                 )}
                 {(order.status === 3) && (
-                  <button onClick={() => handleFinalAcceptOrder(order.id)}>Отправить на подтверждение</button>
+                  <button className='client-manager-orders__table-action-button client-manager-orders__table-action-button--verification' onClick={() => handleFinalAcceptOrder(order.id)}>Отправить на подтверждение</button>
                 )}
                 {(order.status === 4) && (
-                  <button onClick={() => handleApproveZakupkaOrder(order.id)}>Отправить на закупку</button>
+                  <button className='client-manager-orders__table-action-button client-manager-orders__table-action-button--approve' onClick={() => handleApproveZakupkaOrder(order.id)}>Отправить на закупку</button>
                 )}
                 {(order.status === 8) && (
-                  <button onClick={() => handleDoOrder(order.id)}>Выполнить</button>
+                  <button className='client-manager-orders__table-action-button client-manager-orders__table-action-button--do' onClick={() => handleDoOrder(order.id)}>Выполнить</button>
+                )}
+                  {/* Добавляем проверку на выполнен/отменен */}
+                  {(order.status === 2 || order.status === 5 || order.status === 6 ||  order.status === 7 || order.status === 9) &&
+                (
+                  <span className='client-manager-orders__table-pending'>
+                    Вы не можете взаимодействовать с этим заказом.
+                  </span>
                 )}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <h2>Создать новый заказ</h2>
-      <form onSubmit={handleCreateOrder}>
-        <label>
+      <h2 className='client-manager-orders__create-title'>Создать новый заказ</h2>
+      <form className='client-manager-orders__form' onSubmit={handleCreateOrder}>
+        <label className='client-manager-orders__form-label'>
           Наименование:
-          <input value={name} onChange={(e) => setName(e.target.value)} />
+          <input className='client-manager-orders__form-input' value={name} onChange={(e) => setName(e.target.value)} />
         </label>
-        <label>
+        <label className='client-manager-orders__form-label'>
           Описание:
-          <input value={description} onChange={(e) => setDescription(e.target.value)} />
+          <input className='client-manager-orders__form-input' value={description} onChange={(e) => setDescription(e.target.value)} />
         </label>
-        <label>
+        <label className='client-manager-orders__form-label'>
           Габариты:
-          <input value={dimensions} onChange={(e) => setDimensions(e.target.value)} />
+          <input className='client-manager-orders__form-input' value={dimensions} onChange={(e) => setDimensions(e.target.value)} />
         </label>
-        <label>
+        <label className='client-manager-orders__form-label'>
           Примеры:
-          <input value={examples} onChange={(e) => setExamples(e.target.value)} />
+          <input className='client-manager-orders__form-input' value={examples} onChange={(e) => setExamples(e.target.value)} />
         </label>
-        <label>
+        <label className='client-manager-orders__form-label'>
           Клиент:
-          <select value={clientId || ''} onChange={(e) => setClientId(parseInt(e.target.value, 10))}>
+          <select className='client-manager-orders__form-select' value={clientId || ''} onChange={(e) => setClientId(parseInt(e.target.value, 10))}>
             <option value="">Выберите клиента</option>
             {clients.map((client) => (
               <option key={client.id} value={client.id}>
@@ -291,7 +299,7 @@ const OrderManagerPage: React.FC = () => {
             ))}
           </select>
         </label>
-        <button type="submit">Создать заказ</button>
+        <button className='client-manager-orders__form-button' type="submit">Создать заказ</button>
       </form>
     </div>
   )
