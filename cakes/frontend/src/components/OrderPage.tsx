@@ -226,10 +226,10 @@
                     <td className="orders__table-cell">{users[order.manager] || 'Неизвестно'}</td>
                     <td className="orders__table-cell">{users[order.buyer] || 'Неизвестно'}</td>
                     <td className="orders__table-cell-button">
-                      {order.status === 1 && (
+                      {(order.status === 3 || order.status === 4) && (
                         <button className="orders__button orders__button--cancel" onClick={() => handleCancelOrder(order.id)}>Отменить</button>
                       )}
-                      {(order.status === 3 || order.status === 4) && (
+                      {order.status === 1 && ( 
                         <button className="orders__button orders__button--delete" onClick={() => handleDeleteOrder(order.id)}>Удалить</button>
                       )}
                     </td>
