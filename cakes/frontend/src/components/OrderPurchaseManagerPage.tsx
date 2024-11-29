@@ -11,6 +11,7 @@ interface Order {
     buyer: number;
     deadline: string;
     manager: number;
+    product: number
 }
 
 interface Status {
@@ -40,9 +41,11 @@ const OrderPurchaseManagerPage: React.FC = () => {
 
     const getStatusName = (statusId: number) => statuses.find(status => status.id === statusId)?.name || 'Неизвестно';
 
-    const handleStatusChange = async (orderId: number, newStatus: number) => {
+    const handleStatusChange = async (orderId: number, newStatus: number, orderProduct: number) => {
         try {
             await axios.patch(`http://127.0.0.1:8000/api/order/${orderId}/`, { status: newStatus });
+            await axios.get(`http://127.0.0.1:8000/api/product/${orderProduct}/produce/`)
+
             setOrders(prevOrders =>
                 prevOrders.map(order =>
                     order.id === orderId ? { ...order, status: newStatus } : order
@@ -78,7 +81,7 @@ const OrderPurchaseManagerPage: React.FC = () => {
                                 <td>{order.name}</td>
                                 <td>{getStatusName(order.status)}</td>
                                 <td>
-                                    <button onClick={() => handleStatusChange(order.id, 6)}>
+                                    <button onClick={() => handleStatusChange(order.id, 6, order.product)}>
                                         Перевести на "Производство"
                                     </button>
                                 </td>
