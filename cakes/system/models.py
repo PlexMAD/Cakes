@@ -195,3 +195,11 @@ class QualityAssurance(models.Model):
     parameter = models.CharField(max_length=100)
     assured = models.BooleanField()
     comment = models.TextField(null=True, blank=True)
+
+
+class EquipmentProblem(models.Model):
+    id = models.AutoField(primary_key=True)
+    Equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
+    occur_time = models.DateTimeField()
+    comment = models.TextField(null=True, blank=True)
+    end_time = models.DateTimeField(null=True, blank=True)

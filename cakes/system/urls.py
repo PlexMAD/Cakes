@@ -22,6 +22,7 @@ router.register(r'order', OrderViewSet)
 router.register(r'status', StatusViewSet)
 router.register(r'quality', QualityAssuranceViewSet)
 router.register(r'product', ProductViewSet)
+router.register(r'equip_problem', EquipmentProblemViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

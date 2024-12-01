@@ -100,3 +100,11 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = '__all__'
+
+
+class EquipmentProblemSerializer(serializers.ModelSerializer):
+    equipment_name = serializers.CharField(source='Equipment.description', read_only=True)
+
+    class Meta:
+        model = EquipmentProblem
+        fields = ['id', 'Equipment', 'equipment_name', 'occur_time', 'comment', 'end_time']

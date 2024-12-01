@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.db import transaction
 from django.shortcuts import render
+from django.utils import timezone
 from rest_framework import viewsets, status, generics
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.permissions import IsAuthenticated
@@ -72,6 +73,18 @@ class OrderViewSet(viewsets.ModelViewSet):
 class StatusViewSet(viewsets.ModelViewSet):
     queryset = Status.objects.all()
     serializer_class = StatusSerializer
+
+
+class EquipmentProblemViewSet(viewsets.ModelViewSet):
+    queryset = EquipmentProblem.objects.all()
+    serializer_class = EquipmentProblemSerializer
+
+    @action(detail=True, methods=['patch'])
+    def mark_resolved(self, request, pk=None):
+        problem = self.get_object()
+        problem.end_time = timezone.now()
+        problem.save()
+        return Response({'status': 'resolved', 'end_time': problem.end_time})
 
 
 class QualityAssuranceViewSet(viewsets.ModelViewSet):
