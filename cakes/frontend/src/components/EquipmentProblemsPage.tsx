@@ -48,11 +48,11 @@ const EquipmentProblemPage: React.FC = () => {
     };
 
     return (
-        <div>
-            <h1>Проблемы оборудования</h1>
-            <div>
-                <h2>Добавить проблему</h2>
-                <select value={selectedEquipment} onChange={(e) => setSelectedEquipment(Number(e.target.value))}>
+        <div className='equipment-problem'>
+            <h1 className='equipment-problem__title'>Проблемы оборудования</h1>
+            <div className='equipment-problem__add'>
+                <h2 className='equipment-problem__subtitle'>Добавить проблему</h2>
+                <select className='equipment-problem__select' value={selectedEquipment} onChange={(e) => setSelectedEquipment(Number(e.target.value))}>
                     <option value="">Выберите оборудование</option>
                     {equipment.map((item) => (
                         <option key={item.id} value={item.id}>
@@ -60,29 +60,31 @@ const EquipmentProblemPage: React.FC = () => {
                         </option>
                     ))}
                 </select>
-                <input
+                <input 
+                    className='equipment-problem__input'
                     type="datetime-local"
                     value={occurTime}
                     onChange={(e) => setOccurTime(e.target.value)}
                 />
                 <textarea
+                    className='equipment-problem__textarea'
                     placeholder="Введите комментарий (опционально)"
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                 />
-                <button onClick={handleAddProblem}>Добавить</button>
+                <button className='equipment-problem__button equipment-problem__button--add' onClick={handleAddProblem}>Добавить</button>
             </div>
-            <div>
-                <h2>Список проблем</h2>
+            <div className='equipment-problem__list'>
+                <h2 className='equipment-problem__subtitle'>Список проблем</h2>
                 {problems.map((problem) => (
-                    <div key={problem.id}>
-                        <p>
+                    <div className='equipment-problem__item' key={problem.id}>
+                        <p className='equipment-problem__description'>
                             Оборудование: {problem.equipment_name} | Начало сбоя: {problem.occur_time} | 
                             {problem.end_time ? `Исправлено: ${problem.end_time}` : 'Не исправлено'} | 
                             Комментарий: {problem.comment || 'Нет комментария'}
                         </p>
                         {!problem.end_time && (
-                            <button onClick={() => handleMarkResolved(problem.id)}>Отметить как исправленное</button>
+                            <button className='equipment-problem__button equipment-problem__button--resolve' onClick={() => handleMarkResolved(problem.id)}>Отметить как исправленное</button>
                         )}
                     </div>
                 ))}

@@ -1478,3 +1478,102 @@ body, html {
 }
 
 /* Master */
+
+/* Master Problem */
+
+/* Блок общего контейнера */
+.equipment-problem {
+  display: flex;
+  flex-direction: column;
+  max-width: 1400px;
+  padding: 20px;
+  background-color: #FFAA4C;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+  box-sizing: border-box;
+}
+
+/* Заголовки */
+.equipment-problem__title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.equipment-problem__subtitle {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+/* Форма добавления проблемы */
+.equipment-problem__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.equipment-problem__select,
+.equipment-problem__input,
+.equipment-problem__textarea {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.equipment-problem__textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+/* Кнопки */
+.equipment-problem__button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.equipment-problem__button--add {
+  background-color: #4caf50;
+  color: white;
+}
+
+.equipment-problem__button--add:hover {
+  background-color: #45a049;
+}
+
+.equipment-problem__button--resolve {
+  background-color: #4caf50;
+  color: white;
+}
+
+.equipment-problem__button--resolve:hover {
+  background-color: #45a049;
+}
+
+/* Список проблем */
+.equipment-problem__list {
+  margin-top: 20px;
+}
+
+.equipment-problem__item {
+  border: 3px solid #F7E7A4;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.equipment-problem__description {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Master Problem */
