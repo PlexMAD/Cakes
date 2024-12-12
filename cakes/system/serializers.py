@@ -108,3 +108,21 @@ class EquipmentProblemSerializer(serializers.ModelSerializer):
     class Meta:
         model = EquipmentProblem
         fields = ['id', 'Equipment', 'equipment_name', 'occur_time', 'comment', 'end_time']
+
+
+class IngredientsSpecificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IngredientsSpecification
+        fields = '__all__'
+
+
+class CakeDecorationsSpecificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CakeDecorationSpecification
+        fields = '__all__'
+
+
+class OperationsSpecificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OperationsSpecification
+        fields = '__all__'

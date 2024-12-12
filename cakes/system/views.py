@@ -75,6 +75,21 @@ class StatusViewSet(viewsets.ModelViewSet):
     serializer_class = StatusSerializer
 
 
+class IngredientsSpecificationViewSet(viewsets.ModelViewSet):
+    queryset = IngredientsSpecification.objects.all()
+    serializer_class = IngredientsSpecificationSerializer
+
+
+class CakeDecorationsSpecificationViewSet(viewsets.ModelViewSet):
+    queryset = CakeDecorationSpecification.objects.all()
+    serializer_class = CakeDecorationsSpecificationSerializer
+
+
+class OperationsSpecificationViewSet(viewsets.ModelViewSet):
+    queryset = OperationsSpecification.objects.all()
+    serializer_class = OperationsSpecificationSerializer
+
+
 class EquipmentProblemViewSet(viewsets.ModelViewSet):
     queryset = EquipmentProblem.objects.all()
     serializer_class = EquipmentProblemSerializer

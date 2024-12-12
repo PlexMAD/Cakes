@@ -24,6 +24,9 @@ router.register(r'quality', QualityAssuranceViewSet)
 router.register(r'product', ProductViewSet)
 router.register(r'equip_problem', EquipmentProblemViewSet)
 
+router.register(r'ingredient_spec', IngredientsSpecificationViewSet)
+router.register(r'cakedecoration_spec', CakeDecorationsSpecificationViewSet)
+router.register(r'operation_spec', OperationsSpecificationViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('login/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),

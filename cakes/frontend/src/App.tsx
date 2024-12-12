@@ -20,6 +20,7 @@ import OrderDirectorPage from './components/OrderDirectorPage';
 import OrderMasterPage from './components/OrderMasterPage';
 import OrderPurchaseManagerPage from './components/OrderPurchaseManagerPage';
 import EquipmentProblemsPage from './components/EquipmentProblemsPage';
+import SpecificationPage from './components/SpecificationPage';
 
 function App() {
   const [userRole, setUserRole] = useState<string | null>(null);
@@ -85,6 +86,7 @@ function App() {
 
         <Route path="/map" element={<PrivateRoute component={RescueMap} role={"Директор"} userRole={userRole} />} />
         <Route path="/problem" element={<PrivateRoute component={EquipmentProblemsPage} role={"Мастер"} userRole={userRole} />} />
+        <Route path="/specs" element={<PrivateRoute component={SpecificationPage} role={"Мастер"} userRole={userRole} />} />
         
         <Route path="/clientmanager-panel" element={<PrivateRoute component={ClientManagerDashboard} role={"Менеджер по работе с клиентами"} userRole={userRole} />} />
         <Route path="/purchasemanager-panel" element={<PrivateRoute component={PurchasesManagerDashboard} role={"Менеджер по закупкам"} userRole={userRole} />} />

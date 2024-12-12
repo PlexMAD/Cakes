@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/logo.png'; // Укажите путь к логотипу
+import logo from '../assets/logo.png';
 
 interface LoginProps {
     setUserRole: (role: string) => void;
@@ -17,16 +17,16 @@ const Login: React.FC<LoginProps> = ({ setUserRole }) => {
 
     const handleLogin = async () => {
         if (isBlocked) return;
-        
+
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/login/', { login, password });
             localStorage.setItem('access_token', response.data.access);
             localStorage.setItem('refresh_token', response.data.refresh);
             const userResponse = await axios.get('http://127.0.0.1:8000/api/current_user/', {
                 headers: {
-                  Authorization: `Bearer ${response.data.access}`,
+                    Authorization: `Bearer ${response.data.access}`,
                 },
-              });
+            });
             setUserRole(userResponse.data.role);
             navigate('/');
         } catch (error) {
