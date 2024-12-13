@@ -27,7 +27,7 @@ interface SemiProductSpec {
 interface OperationSpec {
     id: number;
     name: string;
-    operation_number: string;
+    operation_number: number;
     product: number;
     equipment_type: number;
     time_required: number;
@@ -40,7 +40,7 @@ interface Decoration {
     id: number;
     name: string;
 }
-interface Equipment {
+interface EquipmentType {
     id: number;
     name: string;
 }
@@ -53,7 +53,7 @@ const SpecificationPage: React.FC = () => {
     const [semiProductsSpec, setSemiProductsSpec] = useState<SemiProductSpec[]>([]);
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
     const [decorations, setDecorations] = useState<Decoration[]>([]);
-    const [equipment, setEquipment] = useState<Equipment[]>([]);
+    const [equipment, setEquipment] = useState<EquipmentType[]>([]);
     const [filter, setFilter] = useState<number | "">("");
     const [editedIngredientSpec, setEditedIngredientSpec] = useState<IngredientSpec | null>(null)
     const [editedDecorationSpec, setEditedDecorationSpec] = useState<DecorationSpec | null>(null)
@@ -71,7 +71,7 @@ const SpecificationPage: React.FC = () => {
                     axios.get<SemiProductSpec[]>("http://127.0.0.1:8000/api/semiproduct_spec/"),
                     axios.get<Ingredient[]>("http://127.0.0.1:8000/api/ingredients/"),
                     axios.get<Decoration[]>("http://127.0.0.1:8000/api/cakedecorations/"),
-                    axios.get<Equipment[]>("http://127.0.0.1:8000/api/equipment/"),
+                    axios.get<EquipmentType[]>("http://127.0.0.1:8000/api/equipmenttype/"),
                 ]);
                 setProducts(productResponse.data);
                 setIngredientsSpec(ingredientSpecResponse.data);
@@ -92,7 +92,44 @@ const SpecificationPage: React.FC = () => {
         ? products.filter((product) => product.id === filter)
         : products;
 
-
+    const saveSpec = async (spec: IngredientSpec | SemiProductSpec | DecorationSpec | OperationSpec) => {
+        console.log(spec)
+        if ('ingredient' in spec) {
+            await axios.patch(`http://127.0.0.1:8000/api/ingredient_spec/${spec.id}/`, {
+                id: spec.id,
+                quantity: spec.quantity,
+                product: spec.product,
+                ingredient: spec.ingredient
+            })
+        }
+        else if ('cake_decoration' in spec) {
+            await axios.patch(`http://127.0.0.1:8000/api/cakedecoration_spec/${spec.id}/`, {
+                id: spec.id,
+                quantity: spec.quantity,
+                product: spec.product,
+                cake_decoration: spec.cake_decoration
+            })
+        }
+        else if ('semiproduct' in spec) {
+            await axios.patch(`http://127.0.0.1:8000/api/semiproduct_spec/${spec.id}/`, {
+                id: spec.id,
+                quantity: spec.quantity,
+                product: spec.product,
+                semiproduct: spec.semiproduct
+            })
+        }
+        else if ('equipment_type' in spec) {
+            await axios.patch(`http://127.0.0.1:8000/api/operation_spec/${spec.id}/`, {
+                id: spec.id,
+                name: spec.name,
+                operation_number: spec.operation_number,
+                product: spec.product,
+                equipment_type: spec.equipment_type,
+                time_required: spec.time_required
+            })
+        }
+        window.location.reload()
+    }
 
 
 
@@ -151,6 +188,7 @@ const SpecificationPage: React.FC = () => {
                             ))}
                         </select>
                         <input type='number' value={editedIngredientSpec?.quantity} onChange={(e) => setEditedIngredientSpec({ ...editedIngredientSpec, quantity: parseInt(e.target.value) })}></input>
+                        <button onClick={() => { saveSpec(editedIngredientSpec) }}>Сохранить</button>
                     </div>
                 )}
             </ul>
@@ -172,8 +210,25 @@ const SpecificationPage: React.FC = () => {
                     ))}
                 {editedDecorationSpec && (
                     <div>
-                        <h3>Редактирование спецификации</h3>
-                        <input type='number' value={editedDecorationSpec?.quantity}></input>
+                        <h3>Редактирование спецификации декораций</h3>
+                        <select value={editedDecorationSpec?.product} id="selectProduct" onChange={(e) => setEditedDecorationSpec({
+                            ...editedDecorationSpec,
+                            product: parseInt(e.target.value),
+                        })}>
+                            {products.map((product) => (
+                                <option value={product.id}>{product.name}</option>
+                            ))}
+                        </select>
+                        <select value={editedDecorationSpec?.cake_decoration} id="selectIngredient" onChange={(e) => setEditedDecorationSpec({
+                            ...editedDecorationSpec,
+                            cake_decoration: parseInt(e.target.value),
+                        })}>
+                            {decorations.map((decoration) => (
+                                <option value={decoration.id}>{decoration.name}</option>
+                            ))}
+                        </select>
+                        <input type='number' value={editedDecorationSpec?.quantity} onChange={(e) => setEditedDecorationSpec({ ...editedDecorationSpec, quantity: parseInt(e.target.value) })}></input>
+                        <button onClick={() => { saveSpec(editedDecorationSpec) }}>Сохранить</button>
                     </div>
                 )}
             </ul>
@@ -197,8 +252,66 @@ const SpecificationPage: React.FC = () => {
             </ul>
             {editedOperationSpec && (
                 <div>
-                    <h3>Редактирование спецификации</h3>
-                    <input type='number' value={editedOperationSpec?.time_required}></input>
+                    <h3>Редактирование спецификации операций</h3>
+                    <select
+                        value={editedOperationSpec.product}
+                        onChange={(e) =>
+                            setEditedOperationSpec({
+                                ...editedOperationSpec,
+                                product: parseInt(e.target.value),
+                            })
+                        }
+                    >
+                        {products.map((product) => (
+                            <option key={product.id} value={product.id}>
+                                {product.name}
+                            </option>
+                        ))}
+                    </select>
+                    <input
+                        type="text"
+                        value={editedOperationSpec.name}
+                        onChange={(e) =>
+                            setEditedOperationSpec({ ...editedOperationSpec, name: e.target.value })
+                        }
+                    />
+                    <input
+                        type="number"
+                        value={editedOperationSpec.operation_number}
+                        onChange={(e) =>
+                            setEditedOperationSpec({
+                                ...editedOperationSpec,
+                                operation_number: parseInt(e.target.value),
+                            })
+                        }
+                    />
+                    <select
+                        value={editedOperationSpec.equipment_type}
+                        onChange={(e) =>
+                            setEditedOperationSpec({
+                                ...editedOperationSpec,
+                                equipment_type: parseInt(e.target.value),
+                            })
+                        }
+                    >
+                        {equipment.map((equip) => (
+                            <option key={equip.id} value={equip.id}>
+                                {equip.name}
+                            </option>
+                        ))}
+                    </select>
+                    <input
+                        type="number"
+                        value={editedOperationSpec.time_required}
+                        onChange={(e) =>
+                            setEditedOperationSpec({
+                                ...editedOperationSpec,
+                                time_required: parseInt(e.target.value),
+                            })
+                        }
+                    />
+                    <button onClick={() => saveSpec(editedOperationSpec)}>Сохранить</button>
+                    <button onClick={() => setEditedOperationSpec(null)}>Отмена</button>
                 </div>
             )}
 
@@ -219,8 +332,25 @@ const SpecificationPage: React.FC = () => {
             </ul>
             {editedSemiSpec && (
                 <div>
-                    <h3>Редактирование спецификации</h3>
-                    <input type='number' value={editedSemiSpec?.quantity}></input>
+                    <h3>Редактирование спецификации полупродуктов</h3>
+                    <select value={editedSemiSpec?.product} id="selectProduct" onChange={(e) => setEditedSemiSpec({
+                        ...editedSemiSpec,
+                        product: parseInt(e.target.value),
+                    })}>
+                        {products.map((product) => (
+                            <option value={product.id}>{product.name}</option>
+                        ))}
+                    </select>
+                    <select value={editedSemiSpec?.semiproduct} id="selectIngredient" onChange={(e) => setEditedSemiSpec({
+                        ...editedSemiSpec,
+                        semiproduct: parseInt(e.target.value),
+                    })}>
+                        {products.map((product) => (
+                            <option value={product.id}>{product.name}</option>
+                        ))}
+                    </select>
+                    <input type='number' value={editedSemiSpec?.quantity} onChange={(e) => setEditedSemiSpec({ ...editedSemiSpec, quantity: parseInt(e.target.value) })}></input>
+                    <button onClick={() => { saveSpec(editedSemiSpec) }}>Сохранить</button>
                 </div>
             )}
         </div>
