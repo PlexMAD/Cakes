@@ -126,3 +126,9 @@ class OperationsSpecificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = OperationsSpecification
         fields = '__all__'
+
+
+class SemiProductsSpecificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SemiproductsSpecification
+        fields = '__all__'

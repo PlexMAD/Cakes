@@ -90,6 +90,11 @@ class OperationsSpecificationViewSet(viewsets.ModelViewSet):
     serializer_class = OperationsSpecificationSerializer
 
 
+class SemiProductsSpecificationViewSet(viewsets.ModelViewSet):
+    queryset = SemiproductsSpecification.objects.all()
+    serializer_class = SemiProductsSpecificationSerializer
+
+
 class EquipmentProblemViewSet(viewsets.ModelViewSet):
     queryset = EquipmentProblem.objects.all()
     serializer_class = EquipmentProblemSerializer
