@@ -1487,7 +1487,7 @@ body, html {
   flex-direction: column;
   max-width: 1400px;
   padding: 20px;
-  background-color: #FFAA4C;
+  background-color: #FF8000;
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   margin: 20px auto;
@@ -1517,9 +1517,11 @@ body, html {
 .equipment-problem__select,
 .equipment-problem__input,
 .equipment-problem__textarea {
+  background-color: #FFAA4C;
+  margin-bottom: 5px;
   padding: 10px;
   font-size: 14px;
-  border: 1px solid #ccc;
+  border: 3px solid #ffdc99;
   border-radius: 4px;
   width: 100%;
   box-sizing: border-box;
@@ -1566,6 +1568,7 @@ body, html {
 
 .equipment-problem__item {
   border: 3px solid #F7E7A4;
+  background-color: #FFAA4C;
   padding: 10px;
   border-radius: 4px;
   margin-bottom: 10px;
@@ -1577,3 +1580,150 @@ body, html {
 }
 
 /* Master Problem */
+
+/* Master Specs */
+
+/* Основной блок спецификаций */
+.specifications {
+  display: block;
+  width: 100%;
+  min-width: 1500px;
+  max-width: 1500px;
+  max-height: fit-content;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  margin:  auto;
+  box-sizing: border-box;
+  background-color: #ff8000;
+}
+
+.specifications__title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.specifications__section-title {
+  font-size: 20px;
+  margin-top: 10px;
+  color:#000;
+}
+
+/* Фильтр */
+.specifications__filter {
+  margin-bottom: 20px;
+}
+
+.filter__label {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.filter__select {
+  background-color: #ffdc99;
+  padding: 5px;
+  font-size: 14px;
+}
+
+/* Список */
+.specifications__list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.specifications__item-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px;
+  border: 3px solid #ffdc99;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  background-color: #FFAA4C;
+}
+
+.specifications__item {
+  display: block;
+  flex-direction: column;
+}
+
+.item-info__text {
+  display: flex;
+  font-size: 14px;
+  margin: 2px 0;
+}
+
+.specifications__button {
+  padding: 5px 10px;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  border: 1px solid #000
+}
+
+.specifications__button--edit {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.specifications__button--edit:hover {
+  background-color: #218838;
+}
+
+/* Редактор */
+.specifications__editor {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  margin: 10px 0;
+  border: 3px solid #ffdc99;
+  border-radius: 5px;
+  background-color: #FFAA4C;
+}
+
+.editor__title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+.editor__select {
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ffdc99;
+  background-color: #ffdc99;
+  border-radius: 3px;
+}
+
+.editor__button {
+  padding: 7px 10px;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.editor__button--save {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.editor__button--save:hover {
+  background-color: #218838;
+}
+
+.editor__button--cancel {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.editor__button--cancel:hover {
+  background-color: #e53935;
+}
+
+
+/* Master Specs */

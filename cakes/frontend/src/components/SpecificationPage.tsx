@@ -135,14 +135,15 @@ const SpecificationPage: React.FC = () => {
 
 
     return (
-        <div>
-            <h1>Спецификации</h1>
+        <div className="specifications">
+            <h1 className="specifications__title">Спецификации</h1>
 
-            <div>
-                <label htmlFor="product-filter">Фильтр по продукту: </label>
+            <div className="specifications__filter">
+                <label htmlFor="product-filter" className="filter__label">Фильтр по продукту: </label>
                 <select
                     id="product-filter"
                     value={filter}
+                    className="filter__select"
                     onChange={(e) => setFilter(e.target.value ? parseInt(e.target.value) : "")}
                 >
                     <option value="">Все продукты</option>
@@ -154,24 +155,31 @@ const SpecificationPage: React.FC = () => {
                 </select>
             </div>
 
-            <h2>Ингредиенты</h2>
-            <ul>
+            <h2 className="specifications__section-title">Ингредиенты</h2>
+            <ul className="specifications__list">
                 {ingredientsSpec
                     .filter((spec) => filteredProducts.some((product) => product.id === spec.product))
                     .map((spec) => (
-                        <div>
-                            <li key={spec.id}>
-                                Продукт: {products.find((p) => p.id === spec.product)?.name || "Неизвестно"},
-                                Ингредиент: {ingredients.find((i) => i.id === spec.ingredient)?.name || "Неизвестно"},
-                                Количество: {spec.quantity}
+                        <div className="specifications__item-info">
+                            <li className="specifications__item" key={spec.id}>
+                                <span className="item-info__text">
+                                    Продукт: {products.find((p) => p.id === spec.product)?.name || "Неизвестно"},
+                                </span>
+                                <span className="item-info__text">
+                                    Ингредиент: {ingredients.find((i) => i.id === spec.ingredient)?.name || "Неизвестно"},
+                                </span>
+                                <span className="item-info__text">
+                                    Количество: {spec.quantity}
+                                </span>
                             </li>
-                            <button onClick={() => setEditedIngredientSpec(spec)}>Редактировать</button>
+                            <button className="specifications__button specifications__button--edit" onClick={() => setEditedIngredientSpec(spec)}>Редактировать</button>
                         </div>
                     ))}
+            
                 {editedIngredientSpec && (
-                    <div>
-                        <h3>Редактирование спецификации ингредиентов</h3>
-                        <select value={editedIngredientSpec?.product} id="selectProduct" onChange={(e) => setEditedIngredientSpec({
+                    <div className="specifications__editor">
+                        <h3 className="editor__title">Редактирование спецификации ингредиентов</h3>
+                        <select value={editedIngredientSpec?.product} id="selectProduct" className="editor__select" onChange={(e) => setEditedIngredientSpec({
                             ...editedIngredientSpec,
                             product: parseInt(e.target.value),
                         })}>
@@ -179,7 +187,7 @@ const SpecificationPage: React.FC = () => {
                                 <option value={product.id}>{product.name}</option>
                             ))}
                         </select>
-                        <select value={editedIngredientSpec?.ingredient} id="selectIngredient" onChange={(e) => setEditedIngredientSpec({
+                        <select value={editedIngredientSpec?.ingredient} id="selectIngredient" className="editor__select" onChange={(e) => setEditedIngredientSpec({
                             ...editedIngredientSpec,
                             ingredient: parseInt(e.target.value),
                         })}>
@@ -187,31 +195,38 @@ const SpecificationPage: React.FC = () => {
                                 <option value={ingredient.id}>{ingredient.name}</option>
                             ))}
                         </select>
-                        <input type='number' value={editedIngredientSpec?.quantity} onChange={(e) => setEditedIngredientSpec({ ...editedIngredientSpec, quantity: parseInt(e.target.value) })}></input>
-                        <button onClick={() => { saveSpec(editedIngredientSpec) }}>Сохранить</button>
+                        <input type='number' value={editedIngredientSpec?.quantity} className="editor__select" onChange={(e) => setEditedIngredientSpec({ ...editedIngredientSpec, quantity: parseInt(e.target.value) })}></input>
+                        <button className="editor__button editor__button--cancel" onClick={() => setEditedIngredientSpec(null)}>Отмена</button>
+                        <button className="editor__button editor__button--save" onClick={() => { saveSpec(editedIngredientSpec) }}>Сохранить</button>
                     </div>
                 )}
             </ul>
 
 
-            <h2>Украшения</h2>
-            <ul>
+            <h2 className="specifications__section-title">Украшения</h2>
+            <ul className="specifications__list">
                 {decorationsSpec
                     .filter((spec) => filteredProducts.some((product) => product.id === spec.product))
                     .map((spec) => (
-                        <div>
-                            <li key={spec.id}>
-                                Продукт: {products.find((p) => p.id === spec.product)?.name || "Неизвестно"},
-                                Украшение: {decorations.find((d) => d.id === spec.cake_decoration)?.name || "Неизвестно"},
-                                Количество: {spec.quantity}
+                        <div className="specifications__item-info">
+                            <li className="specifications__item" key={spec.id}>
+                                <span className="item-info__text">
+                                    Продукт: {products.find((p) => p.id === spec.product)?.name || "Неизвестно"},
+                                </span>
+                                <span className="item-info__text">
+                                    Украшение: {decorations.find((d) => d.id === spec.cake_decoration)?.name || "Неизвестно"},
+                                </span>
+                                <span className="item-info__text">
+                                    Количество: {spec.quantity}
+                                </span>
                             </li>
-                            <button onClick={() => setEditedDecorationSpec(spec)}>Редактировать</button>
+                            <button className="specifications__button specifications__button--edit" onClick={() => setEditedDecorationSpec(spec)}>Редактировать</button>
                         </div>
                     ))}
                 {editedDecorationSpec && (
-                    <div>
-                        <h3>Редактирование спецификации декораций</h3>
-                        <select value={editedDecorationSpec?.product} id="selectProduct" onChange={(e) => setEditedDecorationSpec({
+                    <div className="specifications__editor">
+                        <h3 className="editor__title">Редактирование спецификации декораций</h3>
+                        <select value={editedDecorationSpec?.product} id="selectProduct" className="editor__select" onChange={(e) => setEditedDecorationSpec({
                             ...editedDecorationSpec,
                             product: parseInt(e.target.value),
                         })}>
@@ -219,7 +234,7 @@ const SpecificationPage: React.FC = () => {
                                 <option value={product.id}>{product.name}</option>
                             ))}
                         </select>
-                        <select value={editedDecorationSpec?.cake_decoration} id="selectIngredient" onChange={(e) => setEditedDecorationSpec({
+                        <select value={editedDecorationSpec?.cake_decoration} id="selectIngredient" className="editor__select" onChange={(e) => setEditedDecorationSpec({
                             ...editedDecorationSpec,
                             cake_decoration: parseInt(e.target.value),
                         })}>
@@ -227,34 +242,46 @@ const SpecificationPage: React.FC = () => {
                                 <option value={decoration.id}>{decoration.name}</option>
                             ))}
                         </select>
-                        <input type='number' value={editedDecorationSpec?.quantity} onChange={(e) => setEditedDecorationSpec({ ...editedDecorationSpec, quantity: parseInt(e.target.value) })}></input>
-                        <button onClick={() => { saveSpec(editedDecorationSpec) }}>Сохранить</button>
+                        <input type='number' value={editedDecorationSpec?.quantity} className="editor__select" onChange={(e) => setEditedDecorationSpec({ ...editedDecorationSpec, quantity: parseInt(e.target.value) })}></input>
+                        <button className="editor__button editor__button--cancel" onClick={() => setEditedDecorationSpec(null)}>Отмена</button>
+                        <button className="editor__button editor__button--save" onClick={() => { saveSpec(editedDecorationSpec) }}>Сохранить</button>
                     </div>
                 )}
             </ul>
 
-            <h2>Операции</h2>
-            <ul>
+            <h2 className="specifications__section-title">Операции</h2>
+            <ul className="specifications__list">
                 {operationsSpec
                     .filter((spec) => filteredProducts.some((product) => product.id === spec.product))
                     .map((spec) => (
-                        <div>
-                            <li key={spec.id}>
-                                Продукт: {products.find((p) => p.id === spec.product)?.name || "Неизвестно"},
-                                Операция: {spec.name},
-                                Номер операции: {spec.operation_number},
-                                Оборудование: {equipment.find((e) => e.id === spec.equipment_type)?.name || "Неизвестно"},
-                                Требуемое время: {spec.time_required}
+                        <div className="specifications__item-info">
+                            <li className="specifications__item" key={spec.id}>
+                                <span className="item-info__text">
+                                    Продукт: {products.find((p) => p.id === spec.product)?.name || "Неизвестно"},
+                                </span>
+                                <span className="item-info__text">
+                                    Операция: {spec.name},
+                                </span>
+                                <span className="item-info__text">
+                                    Номер операции: {spec.operation_number},
+                                </span>
+                                <span className="item-info__text">
+                                    Оборудование: {equipment.find((e) => e.id === spec.equipment_type)?.name || "Неизвестно"},
+                                </span>
+                                <span className="item-info__text">
+                                    Требуемое время: {spec.time_required}
+                                </span>
                             </li>
-                            <button onClick={() => setEditedOperationSpec(spec)}>Редактировать</button>
+                            <button className="specifications__button specifications__button--edit" onClick={() => setEditedOperationSpec(spec)}>Редактировать</button>
                         </div>
                     ))}
             </ul>
             {editedOperationSpec && (
-                <div>
-                    <h3>Редактирование спецификации операций</h3>
+                <div className="specifications__editor">
+                    <h3 className="editor__title">Редактирование спецификации операций</h3>
                     <select
                         value={editedOperationSpec.product}
+                        className="editor__select"
                         onChange={(e) =>
                             setEditedOperationSpec({
                                 ...editedOperationSpec,
@@ -271,6 +298,7 @@ const SpecificationPage: React.FC = () => {
                     <input
                         type="text"
                         value={editedOperationSpec.name}
+                        className="editor__select"
                         onChange={(e) =>
                             setEditedOperationSpec({ ...editedOperationSpec, name: e.target.value })
                         }
@@ -278,6 +306,7 @@ const SpecificationPage: React.FC = () => {
                     <input
                         type="number"
                         value={editedOperationSpec.operation_number}
+                        className="editor__select"
                         onChange={(e) =>
                             setEditedOperationSpec({
                                 ...editedOperationSpec,
@@ -287,6 +316,7 @@ const SpecificationPage: React.FC = () => {
                     />
                     <select
                         value={editedOperationSpec.equipment_type}
+                        className="editor__select"
                         onChange={(e) =>
                             setEditedOperationSpec({
                                 ...editedOperationSpec,
@@ -303,6 +333,7 @@ const SpecificationPage: React.FC = () => {
                     <input
                         type="number"
                         value={editedOperationSpec.time_required}
+                        className="editor__select"
                         onChange={(e) =>
                             setEditedOperationSpec({
                                 ...editedOperationSpec,
@@ -310,30 +341,36 @@ const SpecificationPage: React.FC = () => {
                             })
                         }
                     />
-                    <button onClick={() => saveSpec(editedOperationSpec)}>Сохранить</button>
-                    <button onClick={() => setEditedOperationSpec(null)}>Отмена</button>
+                    <button className="editor__button editor__button--save" onClick={() => saveSpec(editedOperationSpec)}>Сохранить</button>
+                    <button className="editor__button editor__button--cancel" onClick={() => setEditedOperationSpec(null)}>Отмена</button>
                 </div>
             )}
 
-            <h2>Полупродукты</h2>
-            <ul>
+            <h2 className="specifications__section-title">Полупродукты</h2>
+            <ul className="specifications__list">
                 {semiProductsSpec
                     .filter((spec) => filteredProducts.some((product) => product.id === spec.product))
                     .map((spec) => (
-                        <div>
-                            <li key={spec.id}>
-                                Продукт: {products.find((p) => p.id === spec.product)?.name || "Неизвестно"},
-                                Полупродукт: {products.find((p) => p.id === spec.semiproduct)?.name || "Неизвестно"},
-                                Количество: {spec.quantity}
+                        <div className="specifications__item-info">
+                            <li className="specifications__item" key={spec.id}>
+                                <span className="item-info__text">
+                                    Продукт: {products.find((p) => p.id === spec.product)?.name || "Неизвестно"},
+                                </span>
+                                <span className="item-info__text">
+                                    Полупродукт: {products.find((p) => p.id === spec.semiproduct)?.name || "Неизвестно"},
+                                </span>
+                                <span className="item-info__text">
+                                    Количество: {spec.quantity}
+                                </span>
                             </li>
-                            <button onClick={() => setEditedSemiSpec(spec)}>Редактировать</button>
+                            <button className="specifications__button specifications__button--edit" onClick={() => setEditedSemiSpec(spec)}>Редактировать</button>
                         </div>
                     ))}
             </ul>
             {editedSemiSpec && (
-                <div>
-                    <h3>Редактирование спецификации полупродуктов</h3>
-                    <select value={editedSemiSpec?.product} id="selectProduct" onChange={(e) => setEditedSemiSpec({
+                <div className="specifications__editor">
+                    <h3 className="editor__title">Редактирование спецификации полупродуктов</h3>
+                    <select value={editedSemiSpec?.product} id="selectProduct" className="editor__select" onChange={(e) => setEditedSemiSpec({
                         ...editedSemiSpec,
                         product: parseInt(e.target.value),
                     })}>
@@ -341,7 +378,7 @@ const SpecificationPage: React.FC = () => {
                             <option value={product.id}>{product.name}</option>
                         ))}
                     </select>
-                    <select value={editedSemiSpec?.semiproduct} id="selectIngredient" onChange={(e) => setEditedSemiSpec({
+                    <select value={editedSemiSpec?.semiproduct} id="selectIngredient" className="editor__select" onChange={(e) => setEditedSemiSpec({
                         ...editedSemiSpec,
                         semiproduct: parseInt(e.target.value),
                     })}>
@@ -349,8 +386,9 @@ const SpecificationPage: React.FC = () => {
                             <option value={product.id}>{product.name}</option>
                         ))}
                     </select>
-                    <input type='number' value={editedSemiSpec?.quantity} onChange={(e) => setEditedSemiSpec({ ...editedSemiSpec, quantity: parseInt(e.target.value) })}></input>
-                    <button onClick={() => { saveSpec(editedSemiSpec) }}>Сохранить</button>
+                    <input type='number' value={editedSemiSpec?.quantity} className="editor__select" onChange={(e) => setEditedSemiSpec({ ...editedSemiSpec, quantity: parseInt(e.target.value) })}></input>
+                    <button className="editor__button editor__button--cancel" onClick={() => setEditedSemiSpec(null)}>Отмена</button>
+                    <button className="editor__button editor__button--save" onClick={() => { saveSpec(editedSemiSpec) }}>Сохранить</button>
                 </div>
             )}
         </div>
