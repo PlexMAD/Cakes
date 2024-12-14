@@ -21,6 +21,7 @@ import OrderMasterPage from './components/OrderMasterPage';
 import OrderPurchaseManagerPage from './components/OrderPurchaseManagerPage';
 import EquipmentProblemsPage from './components/EquipmentProblemsPage';
 import SpecificationPage from './components/SpecificationPage';
+import CostOfThings from './components/CostOfThings';
 
 function App() {
   const [userRole, setUserRole] = useState<string | null>(null);
@@ -46,24 +47,24 @@ function App() {
 
     fetchUserRole();
   }, []);
-  
+
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   const getRedirectPath = () => {
     if (userRole === "Заказчик") {
-      return "/buyer-panel"; 
+      return "/buyer-panel";
     } else if (userRole === "Менеджер по работе с клиентами") {
-      return "/clientmanager-panel"; 
+      return "/clientmanager-panel";
     } else if (userRole === "Менеджер по закупкам") {
-      return "/purchasemanager-panel"; 
+      return "/purchasemanager-panel";
     } else if (userRole === "Мастер") {
-      return "/master-panel"; 
+      return "/master-panel";
     } else if (userRole === "Директор") {
-      return "/director-panel"; 
+      return "/director-panel";
     }
-    return "/"; 
+    return "/";
   };
 
   const canAccessIngredientsAndDecorations = userRole !== "Заказчик";
@@ -77,7 +78,7 @@ function App() {
         <Route path="/reg-panel" element={<PrivateRoute component={BuyerRegistration} role={"Менеджер по работе с клиентами"} userRole={userRole} />} />
         <Route path="/ingredient-page" element={<PrivateRoute component={IngredientsPage} role={"Директор"} userRole={userRole} canAccess={canAccessIngredientsAndDecorations} />} />
         <Route path="/decoration-page" element={<PrivateRoute component={DecorationsPage} role={"Директор"} userRole={userRole} canAccess={canAccessIngredientsAndDecorations} />} />
-        
+
         <Route path="/orders" element={<PrivateRoute component={OrderPage} role={"Заказчик"} userRole={userRole} />} />
         <Route path="/orders-manager" element={<PrivateRoute component={OrderManagerPage} role={"Менеджер по работе с клиентами"} userRole={userRole} />} />
         <Route path="/orders-director" element={<PrivateRoute component={OrderDirectorPage} role={"Директор"} userRole={userRole} />} />
@@ -87,7 +88,9 @@ function App() {
         <Route path="/map" element={<PrivateRoute component={RescueMap} role={"Директор"} userRole={userRole} />} />
         <Route path="/problem" element={<PrivateRoute component={EquipmentProblemsPage} role={"Мастер"} userRole={userRole} />} />
         <Route path="/specs" element={<PrivateRoute component={SpecificationPage} role={"Мастер"} userRole={userRole} />} />
-        
+
+        <Route path="/things" element={<PrivateRoute component={CostOfThings} role={"Менеджер по работе с клиентами"} userRole={userRole} />} />
+
         <Route path="/clientmanager-panel" element={<PrivateRoute component={ClientManagerDashboard} role={"Менеджер по работе с клиентами"} userRole={userRole} />} />
         <Route path="/purchasemanager-panel" element={<PrivateRoute component={PurchasesManagerDashboard} role={"Менеджер по закупкам"} userRole={userRole} />} />
         <Route path="/master-panel" element={<PrivateRoute component={MasterDashboard} role={"Мастер"} userRole={userRole} />} />
