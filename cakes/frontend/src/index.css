@@ -1727,3 +1727,102 @@ body, html {
 
 
 /* Master Specs */
+
+/* Things */
+
+
+/* Блок: things */
+.things {
+  max-width: 1000px;
+  padding: 20px;
+  background-color: #FFAA4C;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+  box-sizing: border-box;
+}
+
+/* Элемент: things__title */
+.things__title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #000;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Элемент: things__table */
+.things__table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #FF8000; 
+  border-radius: 10px;
+  overflow: hidden;
+  border: 3px solid #FF8000; 
+}
+
+/* Элемент: things__table-title */
+.things__table-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #000;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Элементы: заголовки таблицы */
+.things__table-header {
+  background-color: #FF8000;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.things__table-row {
+  transition: background-color 0.3s ease;
+}
+
+/* Элементы: ячейки таблицы */
+.things__table-cell {
+  padding: 10px;
+  font-size: 14px;
+  border-bottom: 1px solid #e6e6e6;
+  color: #000;
+  font-weight: bold; 
+  text-align: center;
+}
+
+/* Модификатор для четных строк */
+.things__table-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.things__table-row:nth-child(even) {
+  background-color: #e6e6e6;
+}
+
+/* Модификатор для последней строки */
+.things__table-row:last-child .orders-director__table-cell {
+  border-bottom: none;
+}
+
+/* Модификатор для ховера */
+.things__table-row:hover {
+  background-color: #FFDC99; 
+}
+
+/* Элементы: ячейки с правым градиентом */
+.things__table-cell {
+  border-right: 1px solid #000;
+  padding: 8px;
+}
+
+/* Элементы: последние ячейки без правого градиента */
+.things__table-cell:last-child {
+  border-right: none;
+}
+
+
+/* Things */

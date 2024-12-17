@@ -101,25 +101,25 @@ const CostOfThings: React.FC = () => {
     };
 
     return (
-        <div>
-            <h2>Оценка затрат ингредиентов, украшений и семипродуктов для тортов</h2>
+        <div className="things">
+            <h2 className="things__title">Оценка затрат ингредиентов, украшений и семипродуктов для тортов</h2>
             {products.map((product) => {
                 const productIngredients = ingredientsSpec.filter((spec) => spec.product === product.id);
                 const productDecorations = decorationsSpec.filter((spec) => spec.product === product.id);
                 const productSemiProducts = semiProductsSpec.filter((spec) => spec.product === product.id);
 
                 return (
-                    <div key={product.id}>
-                        <h3>Продукт: {product.name}</h3>
-                        <table>
+                    <div className="things__item" key={product.id}>
+                        <h3 className="things__table-title">Продукт: {product.name}</h3>
+                        <table className="things__table">
                             <thead>
                                 <tr>
-                                    <th>Наименование</th>
-                                    <th>Требуемое количество</th>
-                                    <th>Наличие на складе</th>
-                                    <th>Недостающее количество</th>
-                                    <th>Себестоимость</th>
-                                    <th>Статус доставки</th>
+                                    <th className="things__table-header">Наименование</th>
+                                    <th className="things__table-header">Требуемое количество</th>
+                                    <th className="things__table-header">Наличие на складе</th>
+                                    <th className="things__table-header">Недостающее количество</th>
+                                    <th className="things__table-header">Себестоимость</th>
+                                    <th className="things__table-header">Статус доставки</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -128,13 +128,13 @@ const CostOfThings: React.FC = () => {
                                     if (!ingredient) return null;
                                     const shortage = calculateShortage(spec.quantity, ingredient.quantity);
                                     return (
-                                        <tr key={`ingredient-${spec.id}`}>
-                                            <td>{ingredient.name}</td>
-                                            <td>{spec.quantity}</td>
-                                            <td>{ingredient.quantity}</td>
-                                            <td>{shortage}</td>
-                                            <td>{ingredient.purchase_price * spec.quantity} руб.</td>
-                                            <td>{getDeliveryStatus(ingredient.main_supplier)}</td>
+                                        <tr className="things__table-row" key={`ingredient-${spec.id}`}>
+                                            <td className="things__table-cell">{ingredient.name}</td>
+                                            <td className="things__table-cell">{spec.quantity}</td>
+                                            <td className="things__table-cell">{ingredient.quantity}</td>
+                                            <td className="things__table-cell">{shortage}</td>
+                                            <td className="things__table-cell">{ingredient.purchase_price * spec.quantity} руб.</td>
+                                            <td className="things__table-cell">{getDeliveryStatus(ingredient.main_supplier)}</td>
                                         </tr>
                                     );
                                 })}
@@ -143,13 +143,13 @@ const CostOfThings: React.FC = () => {
                                     if (!decoration) return null;
                                     const shortage = calculateShortage(spec.quantity, decoration.quantity);
                                     return (
-                                        <tr key={`decoration-${spec.id}`}>
-                                            <td>{decoration.name}</td>
-                                            <td>{spec.quantity}</td>
-                                            <td>{decoration.quantity}</td>
-                                            <td>{shortage}</td>
-                                            <td>{decoration.purchase_price * spec.quantity} руб.</td>
-                                            <td>{getDeliveryStatus(decoration.main_supplier)}</td>
+                                        <tr className="things__table-row" key={`decoration-${spec.id}`}>
+                                            <td className="things__table-cell">{decoration.name}</td>
+                                            <td className="things__table-cell">{spec.quantity}</td>
+                                            <td className="things__table-cell">{decoration.quantity}</td>
+                                            <td className="things__table-cell">{shortage}</td>
+                                            <td className="things__table-cell">{decoration.purchase_price * spec.quantity} руб.</td>
+                                            <td className="things__table-cell">{getDeliveryStatus(decoration.main_supplier)}</td>
                                         </tr>
                                     );
                                 })}
@@ -157,13 +157,13 @@ const CostOfThings: React.FC = () => {
                                     const semiProduct = products.find((p) => p.id === spec.semiproduct);
                                     if (!semiProduct) return null;
                                     return (
-                                        <tr key={`semiproduct-${spec.id}`}>
-                                            <td>{semiProduct.name}</td>
-                                            <td>{spec.quantity}</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>-</td>
+                                        <tr className="things__table-row" key={`semiproduct-${spec.id}`}>
+                                            <td className="things__table-cell">{semiProduct.name}</td>
+                                            <td className="things__table-cell">{spec.quantity}</td>
+                                            <td className="things__table-cell">-</td>
+                                            <td className="things__table-cell">-</td>
+                                            <td className="things__table-cell">-</td>
+                                            <td className="things__table-cell">-</td>
                                         </tr>
                                     );
                                 })}
