@@ -110,7 +110,7 @@ const CostOfThings: React.FC = () => {
 
                 return (
                     <div key={product.id}>
-                        <h3>Торт: {product.name}</h3>
+                        <h3>Продукт: {product.name}</h3>
                         <table>
                             <thead>
                                 <tr>
